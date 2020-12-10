@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trip_planner_app/pages/trip_list_page.dart';
 
 import '../widgets/main_drawer.dart';
 
@@ -12,7 +13,9 @@ class HomePage extends StatelessWidget {
       ),
       drawer: MainDrawer(),
       body: SafeArea(
-        child: Container(),
+        child: Container(
+          child: TripListPage(),
+        ),
       ),
     );
   }

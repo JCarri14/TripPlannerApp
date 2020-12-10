@@ -37,7 +37,7 @@ class MainDrawer extends StatelessWidget {
                 color: Colors.grey,
                 thickness: 0.5,
               ),
-              _createListItem('Dashboard', Icons.home, () {}),
+              _createListItem('Home', Icons.home, () {}),
               _createListItem('Notifications', Icons.notifications, () {}),
               _createListItem('To complete', Icons.edit, () {}),
               _createListItem('Historic', Icons.collections, () {}),
