@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import './pages/splash_page.dart';
-import './pages/unkown_page.dart';
-import './pages/home_page.dart';
+import 'package:trip_planner_app/pages/trip_form_screen.dart';
+import 'pages/splash_screen.dart';
+import 'pages/unkown_screen.dart';
+import 'pages/home_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
       home: HomePage(),
       routes: {
         HomePage.routeName: (ctx) => HomePage(),
+        TripFormScreen.routeName: (ctx) => TripFormScreen(),
       },
       onUnknownRoute: (settings) {
         return MaterialPageRoute(builder: (_) => UnkownPage());
