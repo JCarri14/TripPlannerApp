@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:trip_planner_app/pages/trip_form_screen.dart';
-import 'pages/splash_screen.dart';
-import 'pages/unkown_screen.dart';
-import 'pages/home_screen.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
 
-void main() {
+import 'package:trip_planner_app/pages/trip_form_screen.dart';
+import 'pages/unkown_screen.dart';
+import 'pages/home_page.dart';
+
+void main() async {
+  await DotEnv.load();
   runApp(MyApp());
 }
 
