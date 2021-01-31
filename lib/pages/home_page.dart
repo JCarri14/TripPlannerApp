@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trip_planner_app/pages/trip_form_screen.dart';
-import 'package:trip_planner_app/pages/trip_list_screen.dart';
+import 'package:trip_planner_app/pages/trip_list_page.dart';
 
 import '../widgets/main_drawer.dart';
 
