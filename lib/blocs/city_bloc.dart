@@ -10,7 +10,7 @@ class CityBloc {
   GeoService _geoService;
   
   StreamController _cityListController;
-
+  
   // Objecte que accepta events
   StreamSink<ApiResponse<List<City>>> get cityListSink =>
     _cityListController.sink;

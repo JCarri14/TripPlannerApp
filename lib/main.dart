@@ -6,6 +6,7 @@ import 'package:trip_planner_app/pages/trip.dart';
 
 import 'pages/unkown_screen.dart';
 import 'pages/home_page.dart';
+import 'pages/autocomplete_search.dart';
 
 void main() async {
   await DotEnv.load();
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: TripFormPage(),
+      home: AutoCompleteSearch(),
       routes: {
         HomePage.routeName: (ctx) => HomePage(),
         TripFormScreen.routeName: (ctx) => TripFormScreen(),
