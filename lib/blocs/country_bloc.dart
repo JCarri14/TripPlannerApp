@@ -19,7 +19,7 @@ class CountryBloc {
   Stream<ApiResponse<List<Country>>> get countryListStream =>
     _countryListController.stream;
 
-  GeoBloc() {
+  CountryBloc() {
     _countryListController = StreamController<ApiResponse<List<Country>>>();
     _geoService = GeoService();
   }

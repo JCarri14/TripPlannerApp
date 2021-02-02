@@ -19,7 +19,6 @@ class RegionBloc {
   Stream<ApiResponse<List<Region>>> get regionListStream =>
     _regionListController.stream;
 
-
   RegionBloc() {
     _regionListController = StreamController<ApiResponse<List<Region>>>();
     _geoService = GeoService();
