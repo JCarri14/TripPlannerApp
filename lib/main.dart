@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
 
 import 'package:trip_planner_app/pages/trip_form_screen.dart';
+import 'package:trip_planner_app/pages/trip.dart';
+
 import 'pages/unkown_screen.dart';
 import 'pages/home_page.dart';
 
@@ -21,7 +23,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomePage(),
+      home: TripFormPage(),
       routes: {
         HomePage.routeName: (ctx) => HomePage(),
         TripFormScreen.routeName: (ctx) => TripFormScreen(),

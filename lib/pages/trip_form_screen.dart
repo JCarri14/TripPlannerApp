@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_google_places/flutter_google_places.dart';
+//import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:moneytextformfield/moneytextformfield.dart';
 
 class TripFormScreen extends StatefulWidget {
@@ -58,7 +58,7 @@ class _TripFormScreenState extends State<TripFormScreen> {
                         Container(
                           margin: EdgeInsets.symmetric(vertical: 4),
                           child: TextFormField(
-                            onTap: ,
+                            onTap: () => {},
                             decoration: InputDecoration(
                                 icon: Icon(Icons.home),
                                 border: OutlineInputBorder(
