@@ -10,7 +10,7 @@ import '../models/geo/geo.dart';
 
 class GeoService implements GeoRepository {
   static const String _baseUrl = "wft-geo-db.p.rapidapi.com";
-  static const int fetchLimit = 5;
+  static const int fetchLimit = 5; // free-version constraint
   String _pathUrl;
   Map<String, String> _headers;
   ApiProvider _service = ApiProvider();
