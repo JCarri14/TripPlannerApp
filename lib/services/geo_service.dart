@@ -38,6 +38,8 @@ class GeoService implements GeoRepository {
       case GeoType.COUNTRY:
         _pathUrl = "/v1/geo/countries";
         break;
+      case GeoType.REGION:
+        break;
     }
   }
 
@@ -45,6 +47,14 @@ class GeoService implements GeoRepository {
   Future<List<dynamic>> getAll(GeoType type, int offset) async {
     _updatePath(type);
     Map<String, String> queryParams = { 'offset': (fetchLimit*offset).toString() };
+    final response = await _service.get(_createUri(queryParams), _headers);
+    return GeoResponse.fromJson(response, type).items;
+  }
+
+  @override
+  Future<List<dynamic>> getByPrefix(GeoType type, String prefix, int offset) async {
+    _updatePath(type);
+    Map<String, String> queryParams = {'namePrefix': prefix, 'offset': (fetchLimit*offset).toString(), 'sort': 'city'};
     final response = await _service.get(_createUri(queryParams), _headers);
     return GeoResponse.fromJson(response, type).items;
   }

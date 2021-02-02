@@ -24,10 +24,10 @@ class CityBloc {
     _geoService = GeoService();
   }
 
-  fetchCities(int offset) async {
+  fetchCities(String prefix, int offset) async {
     cityListSink.add(ApiResponse.loading('Fetching Cities'));
     try {
-      List<City> cities = await _geoService.getAll(GeoType.CITY, offset);
+      List<City> cities = await _geoService.getByPrefix(GeoType.CITY, prefix, offset);
       cityListSink.add(ApiResponse.completed(cities));
     } catch (e) {
       cityListSink.add(ApiResponse.error(e.toString()));
