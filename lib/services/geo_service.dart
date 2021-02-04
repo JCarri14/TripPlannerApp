@@ -6,7 +6,9 @@ import '../repository/geo_repository.dart';
 
 import '../models/geo/city.dart';
 import '../models/geo/region.dart';
-import '../models/geo/geo.dart';
+import '../models/geo/geoResponse.dart';
+
+import 'package:geolocator/geolocator.dart';
 
 class GeoService implements GeoRepository {
   static const String _baseUrl = "wft-geo-db.p.rapidapi.com";
@@ -43,6 +45,37 @@ class GeoService implements GeoRepository {
     }
   }
 
+  /// Determine the current position of the device.
+  ///
+  /// When the location services are not enabled or permissions
+  /// are denied the `Future` will return an error.
+  Future<Position> _determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error(
+          'Location permissions are permantly denied, we cannot request permissions.');
+    }
+
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission != LocationPermission.whileInUse &&
+          permission != LocationPermission.always) {
+        return Future.error(
+            'Location permissions are denied (actual value: $permission).');
+      }
+    }
+
+    return await Geolocator.getCurrentPosition();
+  }
+
   @override
   Future<List<dynamic>> getAll(GeoType type, int offset) async {
     _updatePath(type);
@@ -55,6 +88,28 @@ class GeoService implements GeoRepository {
   Future<List<dynamic>> getByPrefix(GeoType type, String prefix, int offset) async {
     _updatePath(type);
     Map<String, String> queryParams = {'namePrefix': prefix, 'offset': (fetchLimit*offset).toString(), 'sort': 'city'};
+    final response = await _service.get(_createUri(queryParams), _headers);
+    return GeoResponse.fromJson(response, type).items;
+  }
+
+  Future<List<dynamic>> getByProximity(GeoType type, int offset) async {
+    _updatePath(type);
+    Position myPosition = await _determinePosition();
+    String latitude, longitude;
+
+    if(myPosition.latitude < 0){
+      latitude = myPosition.latitude.toStringAsFixed(4);
+    } else {
+      latitude = "+" + myPosition.latitude.toStringAsFixed(4);
+    }
+
+    if(myPosition.longitude < 0){
+      longitude = myPosition.longitude.toStringAsFixed(4);
+    } else {
+      longitude = "+" + myPosition.longitude.toStringAsFixed(4);
+    }
+
+    Map<String, String> queryParams = {'location': latitude + longitude, 'radius': "1000", 'offset': (fetchLimit*offset).toString()};
     final response = await _service.get(_createUri(queryParams), _headers);
     return GeoResponse.fromJson(response, type).items;
   }

@@ -22,7 +22,7 @@ class FlightBloc {
     _flightService = FlightService();
   }
 
-  fetchCities(BuildContext context, String origin, String destination, String arrivalDate, String returnDate) async {
+  fetchFlights(BuildContext context, String origin, String destination, String arrivalDate, String returnDate) async {
     flightListSink.add(ApiResponse.loading('Fetching Flights'));
     try {
       List<Flight> flights = await _flightService.getFlights(context, origin, destination, arrivalDate, returnDate);

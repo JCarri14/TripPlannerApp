@@ -1,6 +1,6 @@
 import '../models/geo/city.dart';
 import '../models/geo/region.dart';
-import '../models/geo/geo.dart';
+import '../models/geo/geoResponse.dart';
 
 abstract class GeoRepository {
   Future<List<dynamic>> getAll(GeoType type, int offset);

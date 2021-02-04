@@ -17,13 +17,13 @@ class AirportBloc {
       _airportListController.stream;
 
 
-  FlightBloc() {
+  AirportBloc() {
     _airportListController = StreamController<ApiResponse<List<Airport>>>();
     _airportService = FlightService();
   }
 
-  fetchCities(BuildContext context, String cityName) async {
-    airportListSink.add(ApiResponse.loading('Fetching Flights'));
+  fetchAirports(BuildContext context, String cityName) async {
+    airportListSink.add(ApiResponse.loading('Fetching Airports'));
     try {
       // Devuelve solo un aeropuerto
       List<Airport> airports = await _airportService.getAirports(context, cityName);

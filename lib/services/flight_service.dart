@@ -15,7 +15,7 @@ class FlightService implements FlightRepository {
   Map<String, String> _headers;
   ApiProvider _service = ApiProvider();
 
-  GeoService() {
+  FlightService() {
     _headers = {
       'x-rapidapi-key': env['API_KEY'],
       'x-rapidapi-host': env['API_HOST_FLIGHT'],
