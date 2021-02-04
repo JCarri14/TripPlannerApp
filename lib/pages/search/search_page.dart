@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../api/api_response.dart';
-import '../widgets/search_bar.dart';
-import '../widgets/location_item.dart';
-import '../blocs/text_bloc.dart';
+import '../../api/api_response.dart';
+import '../../widgets/search_bar.dart';
+import '../../widgets/location_item.dart';
+import '../../blocs/text_bloc.dart';
 
 class AutoCompleteSearch extends StatefulWidget {
+  static const routeName = '/search';
   @override
   _AutoCompleteSearchState createState() => _AutoCompleteSearchState();
 }
@@ -58,13 +59,11 @@ class _AutoCompleteSearchState extends State<AutoCompleteSearch> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        leading: BackButton(
-          onPressed: () {}),
         title: SearchInput(
           onChanged: (value) {
             if (value != '') {
               // TODO: Call getItems...
-              dataBloc.fetchCities();
+              //dataBloc.fetchCities();
               print(value);
             }
           },
