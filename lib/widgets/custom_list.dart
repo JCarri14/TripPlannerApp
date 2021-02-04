@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'location_item.dart';
 
 class LocationList extends StatelessWidget {
 
-  final List<String> items;
+  final List<Object> items;
 
   LocationList({this.items}): super();
 
@@ -12,11 +13,7 @@ class LocationList extends StatelessWidget {
       separatorBuilder: (context, index) => Divider(), 
       itemCount: items.length,
       itemBuilder: (context, index) {
-        return ListTile(
-          leading: Icon(Icons.location_on),
-          title: Text(items[index]),
-          onTap: () {},
-        );
+        return LocationItem(city: items[index], index: index, onTapHandler: (index) {});
       },
     );
   }
