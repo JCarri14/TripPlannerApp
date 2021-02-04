@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../models/flight.dart';
+
 class FlightCard extends StatelessWidget {
+
+  final Object flight;
+
+  FlightCard({this.flight});
 
   @override
   Widget build(BuildContext context) {

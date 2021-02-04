@@ -4,6 +4,7 @@ import '../widgets/trip_flight_item.dart';
 import '../widgets/event_list_item.dart';
 
 class TripResume extends StatelessWidget {
+  static const routeName = '/trip-resume';
   @override
   Widget build(BuildContext context) {
     return Scaffold(

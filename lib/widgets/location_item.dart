@@ -3,7 +3,7 @@ import '../models/geo/city.dart';
 
 class LocationItem extends StatelessWidget {
   
-  final City city;
+  final Object city;
   final int index;
   final Function onTapHandler;
 
@@ -11,10 +11,19 @@ class LocationItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (city is City) {
+      City c = city;
+      return ListTile(
+        title: Text(c.name),
+        subtitle: Text(c.country),
+        trailing: Icon(Icons.keyboard_arrow_right),
+        onTap: () => onTapHandler(this.index),
+      );
+    }
     return ListTile(
-      title: Text(this.city.name),
-      subtitle: Text(this.city.country),
-      onTap: () => onTapHandler(this.index),
-    );
+        title: Text(city),
+        trailing: Icon(Icons.keyboard_arrow_right),
+        onTap: () => onTapHandler(this.index),
+      );
   }
 }

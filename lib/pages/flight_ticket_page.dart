@@ -24,6 +24,7 @@ class FlightTicketPage extends StatelessWidget {
                   itemBuilder: (_, i) {
                     return ListTile(
                       title: Text(flights[i].name),
+                      subtitle: Text(flights[i].country)
                     );
                   },
                 );
