@@ -3,7 +3,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
 
 import 'package:trip_planner_app/pages/trip_form_screen.dart';
 import 'package:trip_planner_app/pages/trip.dart';
+import './widgets/flight_card.dart';
 
+import './pages/trip_resume.dart';
 import 'pages/unkown_screen.dart';
 import 'pages/home_page.dart';
 import 'pages/autocomplete_search.dart';
@@ -24,7 +26,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: AutoCompleteSearch(),
+      home: HomePage(),
       routes: {
         HomePage.routeName: (ctx) => HomePage(),
         TripFormScreen.routeName: (ctx) => TripFormScreen(),
