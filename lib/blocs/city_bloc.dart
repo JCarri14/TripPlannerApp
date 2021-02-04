@@ -8,7 +8,6 @@ import '../services/geo_service.dart';
 
 class CityBloc {
   GeoService _geoService;
-  
   StreamController _cityListController;
 
   // Objecte que accepta events
