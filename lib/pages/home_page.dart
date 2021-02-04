@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import './location_search.dart';
+import 'search/search_page.dart';
 import 'package:trip_planner_app/pages/trip_form_screen.dart';
-import 'package:trip_planner_app/pages/trip_list_page.dart';
-import 'package:trip_planner_app/pages/trip.dart';
 import '../widgets/custom_shape.dart';
 
 import '../widgets/main_drawer.dart';
@@ -54,24 +54,26 @@ class HomePage extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(height: 0,),
+                    SizedBox(height: 16,),
                     InkWell(
-                        onTap: () { print("OnTap works");},
+                        onTap: () { 
+                          Navigator.of(context).pushNamed(AutoCompleteSearch.routeName);
+                        },
                         child: Container(
-                        margin: EdgeInsets.symmetric(vertical: 16, horizontal:52),
+                          width: 180,
+                        //margin: EdgeInsets.symmetric(vertical: 16, horizontal:52),
                         child: Material(
                           elevation: 8.0,
                           borderRadius: BorderRadius.circular(8),
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16),
-                            child: TextField(
-                              enabled: false,
-                              decoration: InputDecoration(
-                                alignLabelWithHint: true,
-                                suffixIcon: Icon(Icons.search),
-                                hintText: "Search destination",
-                                border: InputBorder.none
-                              ),
+                            padding: EdgeInsets.all(8),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text('Search destination'),
+                                SizedBox(width: 8),
+                                Icon(Icons.search, color: Colors.blue)
+                              ]
                             ),
                           ),
                         )
