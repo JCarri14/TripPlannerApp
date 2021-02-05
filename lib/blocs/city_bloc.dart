@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:trip_planner_app/models/geo/geo.dart';
+import 'package:trip_planner_app/models/geo/geoResponse.dart';
 
 import '../api/api_response.dart';
 import '../models/geo/city.dart';
@@ -8,7 +8,6 @@ import '../services/geo_service.dart';
 
 class CityBloc {
   GeoService _geoService;
-  
   StreamController _cityListController;
 
   // Objecte que accepta events
@@ -24,10 +23,21 @@ class CityBloc {
     _geoService = GeoService();
   }
 
-  fetchCities(int offset) async {
+  fetchCitiesByPrefix(String prefix, int offset) async {
     cityListSink.add(ApiResponse.loading('Fetching Cities'));
     try {
-      List<City> cities = await _geoService.getAll(GeoType.CITY, offset);
+      List<City> cities = await _geoService.getByPrefix(GeoType.CITY, prefix, offset);
+      cityListSink.add(ApiResponse.completed(cities));
+    } catch (e) {
+      cityListSink.add(ApiResponse.error(e.toString()));
+      print(e);
+    }
+  }
+
+  fetchCitiesByProximity(int offset) async {
+    cityListSink.add(ApiResponse.loading('Fetching Cities'));
+    try {
+      List<City> cities = await _geoService.getByProximity(GeoType.CITY, offset);
       cityListSink.add(ApiResponse.completed(cities));
     } catch (e) {
       cityListSink.add(ApiResponse.error(e.toString()));

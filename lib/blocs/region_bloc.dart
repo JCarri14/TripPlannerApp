@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:trip_planner_app/models/geo/geo.dart';
+import 'package:trip_planner_app/models/geo/geoResponse.dart';
 
 import '../api/api_response.dart';
 import '../models/geo/city.dart';
