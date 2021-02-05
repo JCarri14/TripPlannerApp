@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 
 import '../providers/trip_provider.dart';
 import '../models/flight/flight.dart';
-import '../models/flight/airport.dart';
 
 import '../pages/search/flights_search.dart';
 import '../pages/search/flight_arguments.dart';
@@ -38,7 +37,8 @@ class FlightCard extends StatelessWidget {
     
     if (isOrigin) {
       return InkWell(
-          onTap: () { 
+          onTap: () {
+            tripData.saveDepartureFlight(flight);
             _onFlightReady(context);
           },
           child: PhysicalModel(
@@ -146,7 +146,8 @@ class FlightCard extends StatelessWidget {
         );
     }
     return InkWell(
-      onTap: () { 
+      onTap: () {
+        tripData.saveReturnFlight(flight);
         _onFlightReady(context);
       },
       child: PhysicalModel(

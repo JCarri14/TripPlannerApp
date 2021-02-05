@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 import '../api/api_response.dart';
 
 class FlightTicketPage extends StatelessWidget {
-
-  // final hotelBloc = new HotelBloc()
-
   @override
   Widget build(BuildContext context) {
     return Container(

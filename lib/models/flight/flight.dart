@@ -10,12 +10,10 @@ class Flight {
   });
 
   factory Flight.fromJson(Map<String, dynamic> jsonFlight, Map<String, dynamic> jsonAirline) {
-    if (jsonFlight['QuoteDateTime'] != null && jsonAirline != null) {
-      return Flight(
-        flightTime: jsonFlight['QuoteDateTime'].toString().split(" ")[0],
+    return Flight(
+        flightTime: jsonFlight['QuoteDateTime'] != null ? jsonFlight['QuoteDateTime'] : "",
         minPrice: jsonFlight['MinPrice'],
-        airlineName: jsonAirline['Name']
-      );
-    }
+        airlineName: jsonAirline != null ? jsonAirline['Name'] : ""
+    );
   }
 }
