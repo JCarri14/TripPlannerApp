@@ -6,8 +6,9 @@ class HotelResponse {
   List<Hotel> items;
 
   HotelResponse.fromJson(Map<String, dynamic> json){
+    items = new List<Hotel>();
     json['data']['body']['searchResults']['results'].forEach((c) {
-      items.add(Hotel.fromJson(json));
+      items.add(Hotel.fromJson(c));
     });
   }
 }

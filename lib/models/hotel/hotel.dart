@@ -1,4 +1,5 @@
 import 'package:trip_planner_app/models/hotel/landmark.dart';
+import 'dart:math';
 
 class Hotel {
   final String id;
@@ -7,9 +8,9 @@ class Hotel {
   final String postalCode;
   final String thumbnailUrl;
   final List<Landmark> landmarks;
-  final int starRating;
+  final double starRating;
   final double userRating;
-  final int pricePerNight;
+  int pricePerNight;
   final double latitude;
   final double longitude;
 
@@ -27,19 +28,24 @@ class Hotel {
   });
 
   factory Hotel.fromJson(Map<String, dynamic> json) {
+    print(json);
     Hotel hotel = Hotel(
-      id: json['id'],
+      id: json['id'].toString(),
       name: json['name'],
       address: json['address']['streetAddress'],
-      postalCode: json['address'],
+      postalCode: json['address']['postalCode'].toString(),
       thumbnailUrl: json['thumbnailUrl'],
       landmarks: new List<Landmark>(),
       starRating: json['starRating'],
       userRating: json['guestReviews']['unformattedRating'],
-      pricePerNight: json['ratePlan']['price']['exactCurrent'].round(),
       latitude: json['coordinate']['lat'],
       longitude: json['coordinate']['lon']
     );
+    if (json['ratePlan'] != null) {
+      hotel.pricePerNight = json['ratePlan']['price']['exactCurrent'].round();
+    } else {
+      hotel.pricePerNight = new Random().nextInt(100) + 20;
+    }
 
     json['landmarks'].forEach((c) {
       hotel.landmarks.add(Landmark.fromJson(c));
