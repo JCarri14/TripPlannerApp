@@ -13,9 +13,10 @@ class CardItem extends StatelessWidget {
     return GestureDetector(
       onTap: () {},
       child: Container(
-        width: 200,
-        child: Card(
-          margin: EdgeInsets.symmetric(vertical: 8),
+        width: 175,
+        height: 175,
+        child: Material(
+          borderRadius: BorderRadius.circular(4),
           elevation: 3.0,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,23 +25,20 @@ class CardItem extends StatelessWidget {
                 borderRadius: BorderRadius.vertical(top: Radius.circular(4.0)),
                 child: SizedBox(
                   height: 100,
-                  width: 200,
+                  width: 175,
                   child: Image.network(
                     'https://static.toiimg.com/thumb/66440952/road-trip.jpg?width=1200&height=900',
                     fit: BoxFit.cover,
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 2),
-                child: ListTile(
-                    title: Text(
-                      this.title,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    subtitle: Text(this.subtitle)),
-              ),
+              ListTile(
+                title: Text(
+                  this.title,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                subtitle: Text(this.subtitle, overflow: TextOverflow.ellipsis,)),
             ],
           ),
         ),
