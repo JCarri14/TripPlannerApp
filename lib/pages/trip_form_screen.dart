@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trip_planner_app/pages/search/flight_arguments.dart';
+import 'package:trip_planner_app/services/hotel_service.dart';
+
 import '../widgets/input_form_item.dart';
 import './location_search.dart';
 import 'search/airport_search.dart';
@@ -220,9 +222,15 @@ class _TripFormScreenState extends State<TripFormScreen> {
                       child: FlatButton(
                         child: Text('Continue'),
                         color: Theme.of(context).primaryColor,
-                        onPressed: () {
+                        onPressed: () async {
                           if (_validateForm()) {
                             tripData.saveBudget(int.parse(mycontroller.text.replaceAll(".", "")));  
+                            String res = await new HotelService()
+                              .getCityPositionId(context, 
+                                tripData.destinationCity.name, 
+                                tripData.destinationCity.country);
+                                
+                            tripData.saveDestinationCityId(res);
                             //_formKey.currentState.save();
                             Navigator.of(context).pushNamed(
                               AirportSearch.routeName, 

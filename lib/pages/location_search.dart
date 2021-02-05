@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trip_planner_app/services/hotel_service.dart';
 
 import '../api/api_response.dart';
 import '../widgets/location_item.dart';
@@ -33,8 +32,6 @@ class _LocationSearchState extends State<LocationSearch> {
         return LocationItem(city: items[index], index: index, onTapHandler: () {
           if (isOrigin) {
             this.provider.saveOriginCity(items[index]);
-            new HotelService().getCityPositionId(context, items[index].name, items[index].country)
-            .then((value) => this.provider.saveDestinationCityId(value));
           } else {
             this.provider.saveDestinationCity(items[index]);
           }
