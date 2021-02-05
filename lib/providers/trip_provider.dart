@@ -5,7 +5,6 @@ import '../models/geo/city.dart';
 import '../models/flight/flight.dart';
 import '../models/flight/airport.dart';
 
-
 class TripManager with ChangeNotifier {
     TripPlan _tripPlan;
     City _originCity;
@@ -13,6 +12,7 @@ class TripManager with ChangeNotifier {
     DateTime _destinationDay;
     DateTime _returnDay;
     int budget;
+    String cityId;
 
     TripManager() {
       _tripPlan = new TripPlan();
@@ -24,6 +24,10 @@ class TripManager with ChangeNotifier {
       _originCity = city;
       notifyListeners();
     } 
+
+    void saveDestinationCityId(String id) {
+      this.cityId = id;
+    }
 
     void saveDestinationCity(City city) {
       _destinationCity = city;
@@ -52,6 +56,10 @@ class TripManager with ChangeNotifier {
 
     City get originCity {
       return _originCity;
+    }
+
+    String get positionId {
+      return cityId;
     }
 
     City get destinationCity {

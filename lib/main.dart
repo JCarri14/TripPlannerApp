@@ -10,7 +10,9 @@ import './providers/trip_provider.dart';
 
 // PAGES
 import './pages/trip_resume.dart';
+import './pages/search/airport_search.dart';
 import './pages/search/flights_search.dart';
+import './pages/search/hotel_search.dart';
 import 'pages/unkown_screen.dart';
 import 'pages/home_page.dart';
 import 'pages/location_search.dart';
@@ -41,7 +43,9 @@ class MyApp extends StatelessWidget {
         routes: {
           HomePage.routeName: (ctx) => HomePage(),
           LocationSearch.routeName: (ctx) => LocationSearch(),
+          AirportSearch.routeName: (ctx) => AirportSearch(),
           FlightSearch.routeName: (ctx) => FlightSearch(),
+          HotelSearch.routeName: (ctx) => HotelSearch(),
           TripResume.routeName: (ctx) => TripResume(),
           MapPage.routeName: (ctx) => MapPage(),
           //AutoCompleteSearch.routeName: (ctx) => AutoCompleteSearch(),

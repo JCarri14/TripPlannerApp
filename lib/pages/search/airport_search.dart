@@ -36,7 +36,6 @@ class _AirportSearchState extends State<AirportSearch> {
   }
 
   Widget _buildStreamBuilder(BuildContext ctx, bool isOrigin) {
-    print(isOrigin ? "ORIGIN": "DEST");
     return StreamBuilder(
           stream: isOrigin ? _airportOrgBloc.airportListStream: _airportDstBloc.airportListStream,
           builder: (context, snapshot) {
@@ -97,7 +96,8 @@ class _AirportSearchState extends State<AirportSearch> {
       arguments: FlightArguments(
             isNewTrip: true,
             isOrigin: true,
-          ));
+          )
+      );
     }
   }
 
@@ -107,12 +107,8 @@ class _AirportSearchState extends State<AirportSearch> {
     FlightArguments args = ModalRoute.of(context).settings.arguments;
     
     if (args.isOrigin) {
-      print("ORIGIN");
-      print(tripManager.originCity.name);
         _airportOrgBloc.fetchAirports(context, tripManager.originCity.name);
     } else {
-      print("DESTINATION");
-      print(tripManager.destinationCity.name);
       _airportDstBloc.fetchAirports(context, tripManager.destinationCity.name);
     }
 

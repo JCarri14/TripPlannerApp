@@ -58,6 +58,7 @@ class FlightService implements FlightRepository {
     _updatePath(context, FlightType.ROUTE, pathParams);
     final response = await _service.get(_createUri(null), _headers);
     print("response received");
+    print(response);
     return FlightResponse.fromJson(response, FlightType.ROUTE).items;
   }
 
