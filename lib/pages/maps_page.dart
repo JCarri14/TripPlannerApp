@@ -3,6 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong/latlong.dart';
+import 'package:trip_planner_app/utils/LoadFetchTimer.dart';
 
 import '../widgets/card_item.dart';
 
@@ -14,7 +15,7 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPageState extends State<MapPage> {
-
+  LoadFetchTimer loadFetchTimer = new LoadFetchTimer();
   String mapBoxToken = env['API_TOKEN_MAPBOX'];
   String mapBoxUrl = env['API_URL_TEMPL_MAPBOX'];
 
@@ -87,6 +88,7 @@ class _MapPageState extends State<MapPage> {
                               divisions: 5,
                               label: _sliderValue.round().toString(),
                               onChanged: (value) {
+                                //loadFetchTimer.loadTimer(() => dataBloc.fetchCitiesByPrefix(autocompleteValue, 5));
                                 setState(() {
                                   _sliderValue = value;
                                 });
