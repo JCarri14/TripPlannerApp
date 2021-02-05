@@ -22,11 +22,11 @@ class AirportBloc {
     _airportService = FlightService();
   }
 
-  fetchAirports(BuildContext context, String cityName) async {
+  fetchAirports(BuildContext context, String cityName, String countryName) async {
     airportListSink.add(ApiResponse.loading('Fetching Airports'));
     try {
       // Devuelve solo un aeropuerto
-      List<Airport> airports = await _airportService.getAirports(context, cityName);
+      List<Airport> airports = await _airportService.getAirports(context, cityName, countryName);
       airportListSink.add(ApiResponse.completed(airports));
     } catch (e) {
       airportListSink.add(ApiResponse.error(e.toString()));

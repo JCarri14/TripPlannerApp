@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:lottie/lottie.dart';
-import 'package:trip_planner_app/blocs/flight_bloc.dart';
 import 'package:trip_planner_app/pages/search/flight_arguments.dart';
 
 import '../../blocs/airport_bloc.dart';
@@ -9,7 +8,6 @@ import '../../providers/trip_provider.dart';
 
 import '../../api/api_response.dart';
 import '../../pages/search/flights_search.dart';
-import '../../widgets/flight_card.dart';
 import '../../models/flight/airport.dart';
 
 
@@ -107,9 +105,9 @@ class _AirportSearchState extends State<AirportSearch> {
     FlightArguments args = ModalRoute.of(context).settings.arguments;
     
     if (args.isOrigin) {
-        _airportOrgBloc.fetchAirports(context, tripManager.originCity.name);
+        _airportOrgBloc.fetchAirports(context, tripManager.originCity.name, tripManager.originCity.country);
     } else {
-      _airportDstBloc.fetchAirports(context, tripManager.destinationCity.name);
+      _airportDstBloc.fetchAirports(context, tripManager.destinationCity.name, tripManager.destinationCity.country);
     }
 
     return Scaffold(
