@@ -29,6 +29,7 @@ dependencies:
   moneytextformfield: ^0.3.5+1
   flutter_dotenv: ^3.1.0
   geolocator: ^6.1.14
+  lottie: ^0.7.0+1
   flutter_map: any
 
   # The following adds the Cupertino Icons font to your application.
@@ -52,6 +53,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - .env
+    - assets/circle-loader.json
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
