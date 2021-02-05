@@ -11,7 +11,7 @@ class Flight {
 
   factory Flight.fromJson(Map<String, dynamic> jsonFlight, Map<String, dynamic> jsonAirline) {
     return Flight(
-      flightTime: jsonFlight['QuoteDateTime'].substring(-8),
+      flightTime: jsonFlight['QuoteDateTime'].toString().split(" ")[0],
       minPrice: jsonFlight['MinPrice'],
       airlineName: jsonAirline['Name']
     );

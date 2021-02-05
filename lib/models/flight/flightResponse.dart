@@ -11,14 +11,25 @@ class FlightResponse {
   FlightResponse.fromJson(Map<String, dynamic> json, FlightType type) {
     if (type == FlightType.ROUTE) {
       items = new List<Flight>();
-
-      for(int i = 0; i < 2; i++){
-        items.add(parseItem(type, json['Quotes'][i], json['Carriers'][i]));
+      
+      for(int i = 0; i < json['Quotes'].length && i < 2; i++){
+        int carrierId = json['Quotes'][i]['OutboundLeg']['CarrierIds'][0];
+        var carrier;
+        for (int j = 0; j < json['Carriers'].length; j++) { 
+          if (json['Carriers'][i]['CarrierId'] == carrierId) {
+            print(carrierId);
+            carrier = json['Carriers'][i];
+          }
+        }
+        
+        items.add(parseItem(type, json['Quotes'][i], carrier));
+        print("Hola");
       }
     } else {
       items = new List<Airport>();
-
-      items.add(parseItem(type, json['Places'][0], null));
+      for (int i = 0; i < json['Places'].length; i++) {
+        items.add(parseItem(type, json['Places'][i], null));
+      }
     }
   }
 
