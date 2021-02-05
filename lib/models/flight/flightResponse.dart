@@ -9,7 +9,7 @@ class FlightResponse {
   String nextUrl;
 
   FlightResponse.fromJson(Map<String, dynamic> json, FlightType type) {
-    if (json['Quotes'] != null) {
+    if (type == FlightType.ROUTE) {
       items = new List<Flight>();
 
       for(int i = 0; i < 2; i++){

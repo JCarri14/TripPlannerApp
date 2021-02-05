@@ -45,6 +45,24 @@ class GeoService implements GeoRepository {
     }
   }
 
+  static String generateLocationString(double latitude, double longitude){
+    String latitudeName, longitudeName;
+
+    if(latitude < 0){
+      latitudeName = latitude.toStringAsFixed(4);
+    } else {
+      latitudeName = "+" + latitude.toStringAsFixed(4);
+    }
+
+    if(longitude < 0){
+      longitudeName = longitude.toStringAsFixed(4);
+    } else {
+      longitudeName = "+" + longitude.toStringAsFixed(4);
+    }
+
+    return latitudeName + longitudeName;
+  }
+
   /// Determine the current position of the device.
   ///
   /// When the location services are not enabled or permissions
@@ -95,21 +113,7 @@ class GeoService implements GeoRepository {
   Future<List<dynamic>> getByProximity(GeoType type, int offset) async {
     _updatePath(type);
     Position myPosition = await _determinePosition();
-    String latitude, longitude;
-
-    if(myPosition.latitude < 0){
-      latitude = myPosition.latitude.toStringAsFixed(4);
-    } else {
-      latitude = "+" + myPosition.latitude.toStringAsFixed(4);
-    }
-
-    if(myPosition.longitude < 0){
-      longitude = myPosition.longitude.toStringAsFixed(4);
-    } else {
-      longitude = "+" + myPosition.longitude.toStringAsFixed(4);
-    }
-
-    Map<String, String> queryParams = {'location': latitude + longitude, 'radius': "1000", 'offset': (fetchLimit*offset).toString()};
+    Map<String, String> queryParams = {'location': generateLocationString(myPosition.latitude, myPosition.longitude), 'radius': "1000", 'offset': (fetchLimit*offset).toString()};
     final response = await _service.get(_createUri(queryParams), _headers);
     return GeoResponse.fromJson(response, type).items;
   }

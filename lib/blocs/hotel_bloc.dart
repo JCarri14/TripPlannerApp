@@ -2,9 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:trip_planner_app/api/api_response.dart';
-import 'package:trip_planner_app/models/flight/airport.dart';
 import 'package:trip_planner_app/models/hotel/hotel.dart';
-import 'package:trip_planner_app/services/flight_service.dart';
 import 'package:trip_planner_app/services/hotel_service.dart';
 
 class HotelBloc {
@@ -16,7 +14,7 @@ class HotelBloc {
   StreamSink<ApiResponse<String>> get positionIDSink =>
       _positionIDController.sink;
 
-  Stream<ApiResponse<List<Hotel>>> get positionIDStream =>
+  Stream<ApiResponse<String>> get positionIDStream =>
       _positionIDController.stream;
 
   // Objecte que accepta events

@@ -52,11 +52,10 @@ class FlightService implements FlightRepository {
   }
 
   @override
-  Future<List<Flight>> getFlights(BuildContext context, String origin, String destination, String arrivalDate, String returnDate) async {
-    Map<String, String> pathParams = { 'origin':  origin, 'destination': destination, 'arrivalDate': arrivalDate };
+  Future<List<Flight>> getFlights(BuildContext context, String origin, String destination, String date) async {
+    Map<String, String> pathParams = { 'origin':  origin, 'destination': destination, 'arrivalDate': date };
     _updatePath(context, FlightType.ROUTE, pathParams);
-    Map<String, String> queryParams = { 'inboundpartialdate':  returnDate };
-    final response = await _service.get(_createUri(queryParams), _headers);
+    final response = await _service.get(_createUri(null), _headers);
     return FlightResponse.fromJson(response, FlightType.ROUTE).items;
   }
 
