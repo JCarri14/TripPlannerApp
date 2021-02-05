@@ -8,7 +8,7 @@ import 'package:trip_planner_app/repository/ticketed_events_repository.dart';
 import 'geo_service.dart';
 
 class TicketedEventsService implements TicketedEventsRepository {
-  static const String _baseUrl = "https://api.predicthq.com/v1";
+  static const String _baseUrl = "api.predicthq.com/v1";
   static const int fetchLimit = 5; // free-version constraint
   String _pathUrl = "/events";
   Map<String, String> _headers;

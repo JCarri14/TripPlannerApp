@@ -9,7 +9,7 @@ import 'package:trip_planner_app/models/flight/flightResponse.dart';
 import 'package:trip_planner_app/repository/flight_repository.dart';
 
 class FlightService implements FlightRepository {
-  static const String _baseUrl = "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices";
+  static const String _baseUrl = "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com";
   static const int fetchLimit = 5; // free-version constraint
   String _pathUrl;
   Map<String, String> _headers;
@@ -32,13 +32,14 @@ class FlightService implements FlightRepository {
 
   void _updatePath(BuildContext context, FlightType type, Map<String, String> pathParams) {
     Locale myLocale = Localizations.localeOf(context);
+    String lang = myLocale.languageCode + "-" + myLocale.countryCode;
     switch (type) {
       case FlightType.AIRPORT:
-        _pathUrl = "/autosuggest/v1.0/" + myLocale.countryCode + "/EUR/" + myLocale.languageCode;
+        _pathUrl = "/apiservices/autosuggest/v1.0/" + myLocale.countryCode + "/EUR/" + lang + "/";
         break;
       case FlightType.ROUTE:
-        _pathUrl = "/browsedates/v1.0/" + myLocale.countryCode + "/EUR/" + myLocale.languageCode + "/"
-            + pathParams['origin'] + '/' + pathParams['destination'] + '/' + pathParams['arrivalDate'];
+        _pathUrl = "/apiservices/browsedates/v1.0/" + myLocale.countryCode + "/EUR/" + lang + "/"
+            + pathParams['origin'] + '/' + pathParams['destination'] + '/' + pathParams['arrivalDate'] + "/";
         break;
     }
   }
@@ -46,7 +47,7 @@ class FlightService implements FlightRepository {
   @override
   Future<List<Airport>> getAirports(BuildContext context, String city) async {
     _updatePath(context, FlightType.AIRPORT, null);
-    Map<String, String> queryParams = { 'query':  city };
+    Map<String, String> queryParams = { "query":  city };
     final response = await _service.get(_createUri(queryParams), _headers);
     return FlightResponse.fromJson(response, FlightType.AIRPORT).items;
   }
@@ -56,6 +57,7 @@ class FlightService implements FlightRepository {
     Map<String, String> pathParams = { 'origin':  origin, 'destination': destination, 'arrivalDate': date };
     _updatePath(context, FlightType.ROUTE, pathParams);
     final response = await _service.get(_createUri(null), _headers);
+    print("response received");
     return FlightResponse.fromJson(response, FlightType.ROUTE).items;
   }
 

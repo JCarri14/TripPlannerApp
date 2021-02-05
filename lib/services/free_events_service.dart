@@ -4,7 +4,7 @@ import 'package:trip_planner_app/models/event/eventResponse.dart';
 import 'package:trip_planner_app/repository/free_events_repository.dart';
 
 class FreeEventsService implements FreeEventsRepository {
-  static const String _baseUrl = "https://hotels4.p.rapidapi.com";
+  static const String _baseUrl = "hotels4.p.rapidapi.com";
   static const int fetchLimit = 5; // free-version constraint
   String _pathUrl = "/reference-data/locations/pois";
   Map<String, String> _headers;

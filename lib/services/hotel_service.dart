@@ -8,7 +8,7 @@ import 'package:trip_planner_app/models/hotel/hotelResponse.dart';
 import 'package:trip_planner_app/repository/hotel_repository.dart';
 
 class HotelService implements HotelRepository {
-  static const String _baseUrl = "https://hotels4.p.rapidapi.com";
+  static const String _baseUrl = "hotels4.p.rapidapi.com";
   static const int fetchLimit = 5; // free-version constraint
   String _pathUrl;
   Map<String, String> _headers;

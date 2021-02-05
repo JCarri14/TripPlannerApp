@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../models/flight.dart';
+import '../models/flight/flight.dart';
 
 class FlightCard extends StatelessWidget {
 
-  final Object flight;
+  final Flight flight;
 
   FlightCard({this.flight});
 

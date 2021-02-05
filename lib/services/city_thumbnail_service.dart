@@ -5,7 +5,7 @@ import 'package:trip_planner_app/repository/city_thumbnail_repository.dart';
 import '../api/api_provider.dart';
 
 class CityThumbnailService implements CityThumbnailRepository {
-  static const String _baseUrl = "https://api.teleport.org/api";
+  static const String _baseUrl = "api.teleport.org";
   String _pathUrl;
   Map<String, String> _headers;
   ApiProvider _service = ApiProvider();
@@ -23,7 +23,7 @@ class CityThumbnailService implements CityThumbnailRepository {
   void _updatePath(String name) {
     final pattern = RegExp('\\s+');
     String parseName = name.toLowerCase().replaceAll(pattern, '-');;
-    _pathUrl = "/urban_areas/slug:" + parseName + "/images/";
+    _pathUrl = "/api/urban_areas/slug:" + parseName + "/images/";
   }
 
   @override

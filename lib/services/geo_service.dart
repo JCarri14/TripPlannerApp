@@ -97,7 +97,7 @@ class GeoService implements GeoRepository {
   @override
   Future<List<dynamic>> getAll(GeoType type, int offset) async {
     _updatePath(type);
-    Map<String, String> queryParams = { 'offset': (fetchLimit*offset).toString() };
+    Map<String, String> queryParams = { 'limit': offset.toString() };
     final response = await _service.get(_createUri(queryParams), _headers);
     return GeoResponse.fromJson(response, type).items;
   }
@@ -105,7 +105,7 @@ class GeoService implements GeoRepository {
   @override
   Future<List<dynamic>> getByPrefix(GeoType type, String prefix, int offset) async {
     _updatePath(type);
-    Map<String, String> queryParams = {'namePrefix': prefix, 'offset': (fetchLimit*offset).toString(), 'sort': 'city'};
+    Map<String, String> queryParams = {'namePrefix': prefix, 'limit': offset.toString(), 'sort': 'name'};
     final response = await _service.get(_createUri(queryParams), _headers);
     return GeoResponse.fromJson(response, type).items;
   }
@@ -113,7 +113,7 @@ class GeoService implements GeoRepository {
   Future<List<dynamic>> getByProximity(GeoType type, int offset) async {
     _updatePath(type);
     Position myPosition = await _determinePosition();
-    Map<String, String> queryParams = {'location': generateLocationString(myPosition.latitude, myPosition.longitude), 'radius': "1000", 'offset': (fetchLimit*offset).toString()};
+    Map<String, String> queryParams = {'location': generateLocationString(myPosition.latitude, myPosition.longitude), 'radius': "1000", 'limit': offset.toString()};
     final response = await _service.get(_createUri(queryParams), _headers);
     return GeoResponse.fromJson(response, type).items;
   }

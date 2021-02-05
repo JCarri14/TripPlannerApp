@@ -17,7 +17,7 @@ class LocationItem extends StatelessWidget {
         title: Text(c.name),
         subtitle: Text(c.country),
         trailing: Icon(Icons.keyboard_arrow_right),
-        onTap: () => onTapHandler(this.index),
+        onTap: () => onTapHandler(),
       );
     }
     return ListTile(
