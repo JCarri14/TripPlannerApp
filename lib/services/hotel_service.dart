@@ -17,7 +17,7 @@ class HotelService implements HotelRepository {
   HotelService() {
     _headers = {
       'x-rapidapi-key': env['API_KEY'],
-      'x-rapidapi-host': env['API_HOST_HOTEL'],
+      'x-rapidapi-host': env['API_HOST_HOTELS'],
       'useQueryString': 'true'
     };
   }
@@ -32,10 +32,10 @@ class HotelService implements HotelRepository {
   void _updatePath(HotelType type) {
     switch (type) {
       case HotelType.CITY_SEARCH:
-        _pathUrl = "/locations/search";
+        _pathUrl = "/locations/search/";
         break;
       case HotelType.HOTEL_SEARCH:
-        _pathUrl = "/properties/list";
+        _pathUrl = "/properties/list/";
         break;
     }
   }
@@ -44,7 +44,8 @@ class HotelService implements HotelRepository {
   Future<String> getCityPositionId(BuildContext context, String cityName, String countryName) async {
     _updatePath(HotelType.CITY_SEARCH);
     Locale myLocale = Localizations.localeOf(context);
-    Map<String, String> queryParams = { 'query': cityName + " " + countryName, 'locale': myLocale.languageCode };
+    String locale = myLocale.languageCode + "_" + myLocale.countryCode;
+    Map<String, String> queryParams = { 'query': cityName + " " + countryName, 'locale': locale };
     final response = await _service.get(_createUri(queryParams), _headers);
     return HotelCityIDResponse.fromJson(response).id;
   }
@@ -54,15 +55,20 @@ class HotelService implements HotelRepository {
     _updatePath(HotelType.HOTEL_SEARCH);
 
     Locale myLocale = Localizations.localeOf(context);
-    Map<String, String> queryParams = { 'priceMax': priceMax,
+    String locale = myLocale.languageCode + "_" + myLocale.countryCode;
+    
+    Map<String, String> queryParams = { 
+      "destinationId": positionId,
+      'priceMax': priceMax,
       "pageNumber": "1",
       "checkIn": checkIn,
       "checkOut": checkOut,
       "pageSize": "25",
       "adults1": "1",
-      'locale': myLocale.languageCode,
+      'locale': locale,
       'currency': 'EUR',
       'sort': 'STAR_RATING_HIGHEST_FIRST'};
+      print(queryParams);
     final response = await _service.get(_createUri(queryParams), _headers);
     return HotelResponse.fromJson(response).items;
   }

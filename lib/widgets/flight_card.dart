@@ -119,7 +119,7 @@ class FlightCard extends StatelessWidget {
                   children: [
                     Text(this.flight.flightTime.substring(14,19), style: TextStyle(fontSize: 18, color: Colors.black87, fontWeight: FontWeight.bold)),
                     Expanded(child: Text(tripData.destinationDate, style: TextStyle(fontSize: 16, color: Colors.black54), textAlign: TextAlign.center,),),
-                    Text("02:30 PM", style: TextStyle(fontSize: 18, color: Colors.black87, fontWeight: FontWeight.bold)),
+                    Text("", style: TextStyle(fontSize: 18, color: Colors.black87, fontWeight: FontWeight.bold)),
                   ],
                 ),
                 SizedBox(height: 16,),
@@ -225,9 +225,9 @@ class FlightCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(this.flight.flightTime.substring(14,19), style: TextStyle(fontSize: 18, color: Colors.black87, fontWeight: FontWeight.bold)),
+                Text(this.flight.flightTime.substring(11,16), style: TextStyle(fontSize: 18, color: Colors.black87, fontWeight: FontWeight.bold)),
                 Expanded(child: Text(tripData.returnDate, style: TextStyle(fontSize: 16, color: Colors.black54), textAlign: TextAlign.center,),),
-                Text("02:30 PM", style: TextStyle(fontSize: 18, color: Colors.black87, fontWeight: FontWeight.bold)),
+                Text("", style: TextStyle(fontSize: 18, color: Colors.black87, fontWeight: FontWeight.bold)),
               ],
             ),
             SizedBox(height: 16,),
