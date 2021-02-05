@@ -1,14 +1,19 @@
-import 'package:trip_planner_app/models/flight/trip.dart';
+import 'package:trip_planner_app/models/flight/airport.dart';
+import 'package:trip_planner_app/models/flight/flight.dart';
 import 'package:trip_planner_app/models/hotel/hotel.dart';
 import 'package:trip_planner_app/models/tourDay.dart';
 class TripPlan {
-  final Trip departureTrip;
-  final Trip returnTrip;
-  final Hotel hotel;
-  final List<TourDay> tourDaysList;
+  Airport originAirport;
+  Airport destinationAirport;
+  Flight departureFlight;
+  Flight returnFlight;
+  Hotel hotel;
+  List<TourDay> tourDaysList;
 
-  TripPlan({this.departureTrip,
-  this.returnTrip,
+  TripPlan({this.originAirport,
+  this.destinationAirport,
+  this.departureFlight,
+  this.returnFlight,
   this.hotel,
   this.tourDaysList});
 

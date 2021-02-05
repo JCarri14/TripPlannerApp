@@ -1,12 +1,19 @@
 class City {
-  final String apiId;
-  final String name;
-  final String region;
-  final String country;
-  final double latitude;
-  final double longitude;
+  String apiId;
+  String name;
+  String region;
+  String country;
+  double latitude;
+  double longitude;
 
-  City({this.apiId, this.name, this.region, this.country, this.latitude, this.longitude});
+  City({this.apiId, this.name = "", this.region = "", this.country = "", this.latitude, this.longitude});
+
+  String toString() {
+    if(name == ""){
+      return "";
+    }
+    return this.name + ", " + this.country + ", " + this.region;
+  }
 
   factory City.fromJson(Map<String, dynamic> json) {
     return City(

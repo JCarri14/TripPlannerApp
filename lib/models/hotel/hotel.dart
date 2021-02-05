@@ -42,7 +42,7 @@ class Hotel {
     );
 
     json['landmarks'].forEach((c) {
-      landmarks.add(Landmark.fromJson(c));
+      hotel.landmarks.add(Landmark.fromJson(c));
     });
 
     return hotel;
