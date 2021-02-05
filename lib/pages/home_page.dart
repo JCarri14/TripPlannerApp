@@ -62,7 +62,7 @@ class HomePage extends StatelessWidget {
                       SizedBox(height: 16,),
                       InkWell(
                           onTap: () { 
-                            showHotelBottomSheet(context);
+                            //showHotelBottomSheet(context);
                             //Navigator.of(context).pushNamed(AutoCompleteSearch.routeName);
                           },
                           child: Container(

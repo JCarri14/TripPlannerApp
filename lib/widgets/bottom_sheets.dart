@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 Widget showHotelBottomSheet(ctx) {
   showModalBottomSheet(context: ctx, builder: (BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.6,
+      height: MediaQuery.of(context).size.height * 0.4,
       margin: EdgeInsets.all(16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
@@ -42,34 +42,26 @@ Widget showHotelBottomSheet(ctx) {
               ),
             )
             ],),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text('More Details:', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))),
-            Divider(),
-            ListTile(
+            ExpansionTile(
+              title: Text('More Details:', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
               leading: Icon(Icons.info),
-              title: Text('5 min from Aquarium')
+              children: [
+                ListTile(
+                  title: Text('5 min from Aquarium')
+                ),
+                ListTile(
+                  title: Text('5 min from Aquarium')
+                ),
+              ],
             ),
-            ListTile(
-              leading: Icon(Icons.info),
-              title: Text('5 min from Aquarium')
-            ),
-            ListTile(
-              leading: Icon(Icons.info),
-              title: Text('5 min from Aquarium')
-            ),
-            ListTile(
-              leading: Icon(Icons.info),
-              title: Text('5 min from Aquarium')
-            ),
-            ListTile(
-              leading: Icon(Icons.info),
-              title: Text('5 min from Aquarium')
-            ),
-            ListTile(
-              leading: Icon(Icons.info),
-              title: Text('5 min from Aquarium')
-            ),
+            Container(
+              width: double.infinity,
+              child: RaisedButton(
+                onPressed: () {},
+                color: Colors.blue,
+                child: Text('Select'),
+              ),
+            ), 
           ],)
       ),
     );
