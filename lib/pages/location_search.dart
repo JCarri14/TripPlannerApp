@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../api/api_response.dart';
 import '../widgets/location_item.dart';
-import '../blocs/text_bloc.dart';
+
+import '../blocs/city_bloc.dart';
+import '../models/geo/city.dart';
+
 import '../widgets/custom_shape.dart';
+
+import '../providers/trip_provider.dart';
 
 class LocationSearch extends StatefulWidget {
   static const routeName = '/search';
@@ -13,15 +19,24 @@ class LocationSearch extends StatefulWidget {
 
 class _LocationSearchState extends State<LocationSearch> {
 
-  final dataBloc = new TextBloc();
-  List<String> data = [];
+  final dataBloc = new CityBloc();
+  bool isOrigin = false;
+  TripManager provider;
+  int endTime = 0;
 
-  Widget _buildResultList(BuildContext context, List<Object> items) {
+  Widget _buildResultList(BuildContext context, List<City> items) {
     return ListView.separated(
       separatorBuilder: (context, index) => Divider(), 
       itemCount: items.length,
       itemBuilder: (context, index) {
-        return LocationItem(city: items[index], index: index, onTapHandler: () {});
+        return LocationItem(city: items[index], index: index, onTapHandler: () {
+          if (isOrigin) {
+            this.provider.saveOriginCity(items[index]);
+          } else {
+            this.provider.saveDestinationCity(items[index]);
+          }
+          Navigator.of(context).pop();
+        });
       },
     );
   }
@@ -36,7 +51,7 @@ class _LocationSearchState extends State<LocationSearch> {
             )
           );
         case Status.COMPLETED:
-          data = snapshot.data.data ?? [];
+          List<City> data = snapshot.data.data ?? [];
           return _buildResultList(context, data);
         case Status.ERROR:
           return Container(
@@ -57,6 +72,10 @@ class _LocationSearchState extends State<LocationSearch> {
 
   @override
   Widget build(BuildContext context) {
+
+    this.isOrigin = ModalRoute.of(context).settings.arguments;
+    this.provider = Provider.of<TripManager>(context);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -85,8 +104,14 @@ class _LocationSearchState extends State<LocationSearch> {
                     borderRadius: BorderRadius.circular(8)
                   ),
                   child: TextField(
+                    autofocus: true,
                     onChanged: (value) {
-                      dataBloc.fetchCities();
+                      int currTime = DateTime.now().millisecondsSinceEpoch;
+                      
+                      if (value.length >= 2 && endTime < currTime) {
+                        endTime = DateTime.now().millisecondsSinceEpoch + 1500;
+                        dataBloc.fetchCitiesByPrefix(value, 5);
+                      }
                     },
                     decoration: InputDecoration(
                       hintText: 'Enter a city...',
@@ -110,5 +135,12 @@ class _LocationSearchState extends State<LocationSearch> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    dataBloc.dispose();
+    super.dispose();
   }
 }
