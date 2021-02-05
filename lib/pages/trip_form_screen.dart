@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-//import 'package:flutter_google_places/flutter_google_places.dart';
-import 'package:moneytextformfield/moneytextformfield.dart';
+import 'package:trip_planner_app/pages/search/flight_arguments.dart';
+import '../widgets/input_form_item.dart';
+import './location_search.dart';
+import 'search/flights_search.dart';
+//import 'package:moneytextformfield/moneytextformfield.dart';
 
 class TripFormScreen extends StatefulWidget {
   static const routeName = '/new-trip';
@@ -33,6 +36,7 @@ class _TripFormScreenState extends State<TripFormScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('New Trip'),
+        centerTitle: true,
       ),
       body: SafeArea(
         child: Column(
@@ -45,7 +49,7 @@ class _TripFormScreenState extends State<TripFormScreen> {
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
                       children: [
-                        Container(
+                        /*Container(
                           width: double.infinity,
                           margin: EdgeInsets.only(top: 4, bottom: 16),
                           child: Text('Where do you want to travel?',
@@ -54,31 +58,18 @@ class _TripFormScreenState extends State<TripFormScreen> {
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
                               )),
+                        ),*/
+                        Container(
+                          margin: EdgeInsets.symmetric(vertical: 4),
+                          child: InputFormItem(refTitle: 'From', hintText: 'Enter origin...', onTapHandler: () {
+                            Navigator.of(context).pushNamed(LocationSearch.routeName);
+                          })
                         ),
                         Container(
                           margin: EdgeInsets.symmetric(vertical: 4),
-                          child: TextFormField(
-                            onTap: () => {},
-                            decoration: InputDecoration(
-                                icon: Icon(Icons.home),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(4)),
-                                labelText: 'From',
-                                hintText: 'Enter a city...'),
-                            onFieldSubmitted: (_) {},
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.symmetric(vertical: 4),
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                                icon: Icon(Icons.airplanemode_active),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(4)),
-                                labelText: 'To',
-                                hintText: 'Enter a city...'),
-                            onFieldSubmitted: (_) {},
-                          ),
+                          child: InputFormItem(refTitle: 'To', hintText: 'Enter destination...', onTapHandler: () {
+                            Navigator.of(context).pushNamed(LocationSearch.routeName);
+                          }),
                         ),
                         Container(
                           margin: EdgeInsets.symmetric(vertical: 8),
@@ -158,7 +149,7 @@ class _TripFormScreenState extends State<TripFormScreen> {
                                 fontWeight: FontWeight.bold,
                               )),
                         ),
-                        Container(
+                        /*Container(
                             width: double.infinity,
                             child: MoneyTextFormField(
                                 settings: MoneyTextFormFieldSettings(
@@ -174,7 +165,7 @@ class _TripFormScreenState extends State<TripFormScreen> {
                                     appearanceSettings: AppearanceSettings(
                                       labelText: 'Euro Format',
                                     )))),
-                      ],
+                      */],
                     ),
                   ),
                 ),
@@ -205,7 +196,14 @@ class _TripFormScreenState extends State<TripFormScreen> {
                       child: FlatButton(
                         child: Text('Continue'),
                         color: Theme.of(context).primaryColor,
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).pushNamed(
+                            FlightSearch.routeName,
+                            arguments: FlightArguments(
+                              isNewTrip: true,
+                              isOrigin: true,
+                            ));
+                        },
                       ),
                     ),
                   ),
