@@ -5,6 +5,26 @@ import '../widgets/list-items/event_list_item.dart';
 
 class TripResume extends StatelessWidget {
   static const routeName = '/trip-resume';
+
+  String insertTripPlan() {
+    return """
+      mutation insertTripPlan(\$name: String!, \$rocket: String!, \$twitter: String!) {
+        insert_users(objects: {
+          name: \$name,
+          rocket: \$rocket,
+          twitter: \$twitter,
+        }) {
+          returning {
+            id
+            name
+            twitter
+            rocket
+          }
+        }
+      }
+    """;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
