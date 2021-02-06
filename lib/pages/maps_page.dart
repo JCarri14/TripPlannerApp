@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-
-import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong/latlong.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:provider/provider.dart';
+import '../providers/trip_provider.dart';
 
-import '../widgets/card_item.dart';
+// FLUTTER MAP
+import 'package:flutter_map/flutter_map.dart';
+
+// UI
+import '../widgets/cards/card_item.dart';
+
+
+//MODELS
+import '../models/hotel/hotel.dart';
+
+//DRAGGABLES
+import '../widgets/draggables/hotel_draggable.dart';
+import '../widgets/draggables/events_draggable.dart';
 
 
 class MapPage extends StatefulWidget {
@@ -15,16 +27,65 @@ class MapPage extends StatefulWidget {
 
 class _MapPageState extends State<MapPage> {
 
-  String mapBoxToken = env['API_TOKEN_MAPBOX'];
-  String mapBoxUrl = env['API_URL_TEMPL_MAPBOX'];
+  final String mapBoxToken = env['API_TOKEN_MAPBOX'];
+  final String mapBoxUrl = env['API_URL_TEMPL_MAPBOX'];
 
-  List listItems = ['Item 1', 'Item 2', 'Item 3', 'Item 4'];
   String valueChoose;
+  double _sliderValue;
 
-  double _sliderValue = 30.0;
+  final MapController _mapController = MapController();
+  List<Marker> markers;
+  double _mapZoom;
+  LatLng _cityCenter;
+  LatLng _currPoint;
+  TripManager tripManager;
+
+  @override
+  void initState() {
+    super.initState();
+    _sliderValue = 30.0;
+    _mapZoom = 13.0;
+    markers = [];
+  }
+  
+
+  void addMarker(double lat, double lng) { 
+    bool exists = markers.contains((e) {
+      if (e.point.latitude == lat && e.point.longitude == lng) return true;
+      return false;
+    });
+
+    if (!exists) {
+      _currPoint = new LatLng(lat, lng);
+      //setState(() {
+        markers.add(new Marker(
+          width: 30.0,
+          height: 30.0,
+          point: _currPoint,
+          builder: (ctx) =>
+          new Container(
+            decoration: BoxDecoration(
+              color: Colors.blue,
+              borderRadius: BorderRadius.circular(16)
+            ),
+            child: Icon(Icons.my_location, color: Colors.white,),
+          ),)
+        );
+      //});
+      _mapController.move(_currPoint, _mapZoom);
+
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    print("did build..................");
+    tripManager = Provider.of<TripManager>(context);
+    bool isHotels = ModalRoute.of(context).settings.arguments;
+
+    _cityCenter = LatLng(tripManager.destinationCity.latitude, tripManager.destinationCity.longitude);
+    _currPoint = _cityCenter;
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Map"),
@@ -35,9 +96,12 @@ class _MapPageState extends State<MapPage> {
           child: Stack(children: [
             Container(
               child: FlutterMap(
+                mapController: _mapController,
                 options: new MapOptions(
-                  center: new LatLng(-5.95, -35.9258), 
-                  minZoom: 17.0
+                  center: _cityCenter, 
+                  minZoom: 5.0,
+                  maxZoom: 15.0,
+                  zoom: _mapZoom,
                 ),
                 layers: [
                   new TileLayerOptions(
@@ -46,95 +110,72 @@ class _MapPageState extends State<MapPage> {
                       'accessToken': mapBoxToken,
                       'id': 'mapbox.mapbox-streets-v7'
                     }
+                  ),
+                  new MarkerLayerOptions(
+                    markers: markers
                   )
                 ]
               ),
             ),
-            Container(
-              child: DraggableScrollableSheet(
-                expand: true,
-                initialChildSize: 0.5,
-                minChildSize: 0.08,
-                maxChildSize: 0.68,
-                builder: (_, controller) {
-                  return Container(
-                    width: double.infinity,
+            Positioned(
+              top: 0,
+              right: 0,
+              child: Container(
+                margin: EdgeInsets.only(right: 8, top: 8),
+                child: Column(children: [
+                  Container(
+                    width: 40,
+                    height: 40,
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(16),
-                        topLeft: Radius.circular(16)),
+                      borderRadius: BorderRadius.circular(8)
                     ),
-                    child: SingleChildScrollView(
-                      controller: controller,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          SizedBox(height: 16),
-                          Text('Activities (Day 1)', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                        ListTile(
-                          title: Text('Total Budget left:'),
-                          trailing: Text('400'),
-                        ),   
-                        ExpansionTile(
-                          title: Text('Filter Cost'),
-                          trailing: Icon(Icons.keyboard_arrow_down),
-                          children: [
-                            Slider(
-                              value: _sliderValue,
-                              min: 0,
-                              max: 100,
-                              divisions: 5,
-                              label: _sliderValue.round().toString(),
-                              onChanged: (value) {
-                                setState(() {
-                                  _sliderValue = value;
-                                });
-                              },
-                            )
-                          ],
-                        ),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Container(
-                            margin: EdgeInsets.only(left: 16),
-                            width: 150,
-                                 child: DropdownButtonHideUnderline(
-                                    child: DropdownButton(
-                                      isExpanded: true,
-                                     hint: Text('Categories'),
-                                     value: valueChoose,
-                                     onChanged: (newValue) {
-                                       setState(() {
-                                         valueChoose = newValue;
-                                       });
-                                     },
-                                     items: listItems.map((item) {
-                                       return DropdownMenuItem(
-                                        value: item,
-                                        child: Text(item),
-                                       );
-                                     }).toList()
-                                   ),
-                                 ),
-                               )
-                        ),
-                        SizedBox(height: 16),
-                        CardItem(title: 'Item 1', subtitle: 'subtitle', imageUrl: '',),
-                        SizedBox(height: 16),
-                        Container(
-                          height: 45,
-                          width: double.infinity,
-                          child: RaisedButton(
-                              onPressed: () {},
-                              color: Colors.blue,
-                              child: Text('Continue')
-                            ),
-                        )
-                      ]),
-                    )                
-                  );
-                }),
+                    child: IconButton(
+                      onPressed: () {
+                        _mapZoom += 2.5;
+                        _mapController.move(_currPoint, _mapZoom);
+                      },
+                      icon: Icon(Icons.add),),
+                  ),
+                  SizedBox(height: 8,),
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8)
+                    ),
+                    child: IconButton(
+                      onPressed: () {
+                        _mapZoom -= 2.5;
+                        _mapController.move(_currPoint, _mapZoom);
+                      },
+                      icon: Icon(Icons.remove),),
+                  ),
+                  SizedBox(height: 8,),
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8)
+                    ),
+                    child: IconButton(
+                      onPressed: () {
+                        _currPoint = _cityCenter;
+                        _mapController.move(_currPoint, _mapZoom);
+                      },
+                      icon: Icon(Icons.my_location),),
+                  ),
+                
+                ],
+                ),
+              ),
+            ),
+            Container(
+              child: isHotels ? HotelDraggable(
+                onChangeLocation: (Hotel h) => addMarker(h.latitude, h.longitude))
+                : EventsDraggable()
             )
           ],)
         )

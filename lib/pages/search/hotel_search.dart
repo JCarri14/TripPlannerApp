@@ -4,7 +4,7 @@ import '../../api/api_response.dart';
 
 import '../../blocs/hotel_bloc.dart';
 import '../../models/hotel/hotel.dart';
-import '../../widgets/card_item.dart';
+import '../../widgets/cards/card_item.dart';
 import '../../providers/trip_provider.dart';
 
 class HotelSearch extends StatefulWidget {
@@ -34,17 +34,41 @@ class _HotelSearchState extends State<HotelSearch> {
                 List<Hotel> hotels = snapshot.data.data ?? [];
                 return Container(
                   width: double.infinity,
-                  child: ListView.separated(
-                    separatorBuilder: (context, index) {
-                      return Divider();
-                    },
+                  child: ListView.builder(
                     itemCount: hotels.length,
                     itemBuilder: (_, index) {
-                    return CardItem(
-                        title: hotels[index].name,
-                        subtitle: hotels[index].address,
-                        imageUrl: "",
-                    );
+                    return Container(
+                      margin: EdgeInsets.symmetric(),
+                      padding: EdgeInsets.all(8),
+                        child: Material(
+                        elevation: 4.0,
+                        child: Container(
+                          child: Row(
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(hotels[index].name, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                                  Text(hotels[index].address)
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Icon(Icons.attach_money),
+                                  Text(hotels[index].pricePerNight.toString() + "€")
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Icon(Icons.star),
+                                  Text(hotels[index].starRating.toString())
+                                ],
+                              )
+                            ],
+                          )
+                        )
+                      ),
+                    );//CardItem(hotel: hotels[index]);
                   },)
                 );
               }
