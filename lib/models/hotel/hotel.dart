@@ -52,4 +52,46 @@ class Hotel {
 
     return hotel;
   }
+
+  factory Hotel.fromJsonResume(Map<String, dynamic> json){
+    Hotel hotel = Hotel(
+        id: json['id'].toString(),
+        name: json['name'],
+        address: json['address'],
+        postalCode: json['postalCode'].toString(),
+        thumbnailUrl: json['thumbnailUrl'],
+        landmarks: new List<Landmark>(),
+        starRating: json['starRating'],
+        userRating: json['userRating'],
+        pricePerNight: json['pricePerNight'],
+        latitude: json['latitude'],
+        longitude: json['longitude']
+    );
+
+    for(Map<String, dynamic> value in json['landmarks']){
+      hotel.landmarks.add(Landmark.fromJsonResume(value));
+    }
+
+    return hotel;
+  }
+
+  String toJson(){
+    String landmarkResponse = "{ landmarks: [";
+    for(Landmark landmark in this.landmarks){
+      landmarkResponse += landmark.toJson() + ",";
+    }
+    landmarkResponse += "] }";
+    return "{"
+        "id: " + this.id + ","
+        "name: " + this.name + ","
+        "address: " + this.address + ","
+        "postalCode: " + this.postalCode + ","
+        "thumbnailUrl: " + this.thumbnailUrl + ","
+        "landmarks: " + landmarkResponse + ","
+        "starRating: " + this.starRating.toString() + ","
+        "userRating: " + this.userRating.toString() + ","
+        "latitude: " + this.latitude.toString() + ","
+        "longitude: " + this.longitude.toString() + ","
+        "}";
+  }
 }
