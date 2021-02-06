@@ -3,6 +3,7 @@ import 'package:latlong/latlong.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import '../providers/trip_provider.dart';
+import 'package:trip_planner_app/utils/LoadFetchTimer.dart';
 
 // FLUTTER MAP
 import 'package:flutter_map/flutter_map.dart';
@@ -26,7 +27,7 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPageState extends State<MapPage> {
-
+  LoadFetchTimer loadFetchTimer = new LoadFetchTimer();
   final String mapBoxToken = env['API_TOKEN_MAPBOX'];
   final String mapBoxUrl = env['API_URL_TEMPL_MAPBOX'];
 
@@ -47,9 +48,9 @@ class _MapPageState extends State<MapPage> {
     _mapZoom = 13.0;
     markers = [];
   }
-  
 
-  void addMarker(double lat, double lng) { 
+
+  void addMarker(double lat, double lng) {
     bool exists = markers.contains((e) {
       if (e.point.latitude == lat && e.point.longitude == lng) return true;
       return false;
@@ -98,7 +99,7 @@ class _MapPageState extends State<MapPage> {
               child: FlutterMap(
                 mapController: _mapController,
                 options: new MapOptions(
-                  center: _cityCenter, 
+                  center: _cityCenter,
                   minZoom: 5.0,
                   maxZoom: 15.0,
                   zoom: _mapZoom,
@@ -167,7 +168,7 @@ class _MapPageState extends State<MapPage> {
                       },
                       icon: Icon(Icons.my_location),),
                   ),
-                
+
                 ],
                 ),
               ),

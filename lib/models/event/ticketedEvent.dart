@@ -1,6 +1,8 @@
 import './event.dart';
 import 'dart:math';
 
+enum TicketedEventCategory {CONFERENCES, EXPOS, CONCERTS, FESTIVALS, ARTS, SPORTS}
+
 class TicketedEvent extends Event {
   String description;
   String venue;
@@ -23,5 +25,9 @@ class TicketedEvent extends Event {
     ticketedEvent.endDatetime = json['end'];
     ticketedEvent.price = new Random().nextInt(40) + 5;
     return ticketedEvent;
+  }
+
+  static List<TicketedEventCategory> getCategories(){
+    return TicketedEventCategory.values;
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trip_planner_app/utils/LoadFetchTimer.dart';
 
 import '../api/api_response.dart';
 import '../widgets/location_item.dart';
@@ -18,11 +19,12 @@ class LocationSearch extends StatefulWidget {
 }
 
 class _LocationSearchState extends State<LocationSearch> {
-
+  LoadFetchTimer loadFetchTimer = new LoadFetchTimer();
   final dataBloc = new CityBloc();
   bool isOrigin = false;
   TripManager provider;
   int endTime = 0;
+  String autocompleteValue;
 
   Widget _buildResultList(BuildContext context, List<City> items) {
     return ListView.separated(
@@ -106,11 +108,9 @@ class _LocationSearchState extends State<LocationSearch> {
                   child: TextField(
                     autofocus: true,
                     onChanged: (value) {
-                      int currTime = DateTime.now().millisecondsSinceEpoch;
-                      
-                      if (value.length >= 1 && endTime < currTime) {
-                        endTime = DateTime.now().millisecondsSinceEpoch + 1500;
-                        dataBloc.fetchCitiesByPrefix(value, 5);
+                      if (value.length > 1) {
+                        loadFetchTimer.loadTimer(() => dataBloc.fetchCitiesByPrefix(autocompleteValue, 5));
+                        autocompleteValue = value;
                       }
                     },
                     decoration: InputDecoration(
@@ -139,7 +139,7 @@ class _LocationSearchState extends State<LocationSearch> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    loadFetchTimer.cancelTimer();
     dataBloc.dispose();
     super.dispose();
   }
