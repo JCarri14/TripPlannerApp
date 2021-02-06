@@ -9,15 +9,20 @@ class TripManager with ChangeNotifier {
     TripPlan _tripPlan;
     City _originCity;
     City _destinationCity;
-    DateTime _destinationDay;
-    DateTime _returnDay;
+    DateTime _destinationDay = DateTime.now();
+    DateTime _returnDay = DateTime.now();
     int budget;
     String cityId;
+
+    //LOGIC
+    int _totalDays;
+    int _currDay;
 
     TripManager() {
       _tripPlan = new TripPlan();
       _originCity = new City();
       _destinationCity = new City();
+      _currDay = 1;
     }
 
     void saveOriginCity(City city) {
@@ -90,6 +95,10 @@ class TripManager with ChangeNotifier {
       return _tripPlan.returnFlight;
     }
 
+    int get currDay {
+      return _currDay;
+    }
+
     void saveDestinationDay(DateTime destinationDay) {
       this._destinationDay = destinationDay;
       notifyListeners();
@@ -97,6 +106,7 @@ class TripManager with ChangeNotifier {
 
     void saveReturnDay(DateTime returnDay) {
       this._returnDay = returnDay;
+      this._totalDays = this._destinationDay.difference(returnDay).inDays;
       notifyListeners();
     }
 
