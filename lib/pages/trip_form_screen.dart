@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trip_planner_app/pages/search/flight_arguments.dart';
-import 'package:trip_planner_app/services/hotel_service.dart';
+import 'package:moneytextformfield/moneytextformfield.dart';
 
-import '../widgets/input_form_item.dart';
+import './search/flight_arguments.dart';
+import '../services/hotel_service.dart';
+
+import '../widgets/list-items/input_form_item.dart';
 import './location_search.dart';
 import 'search/airport_search.dart';
 
 import '../providers/trip_provider.dart';
-import 'package:moneytextformfield/moneytextformfield.dart';
 
 class TripFormScreen extends StatefulWidget {
   static const routeName = '/new-trip';
@@ -229,7 +230,7 @@ class _TripFormScreenState extends State<TripFormScreen> {
                               .getCityPositionId(context, 
                                 tripData.destinationCity.name, 
                                 tripData.destinationCity.country);
-                                
+
                             tripData.saveDestinationCityId(res);
                             //_formKey.currentState.save();
                             Navigator.of(context).pushNamed(

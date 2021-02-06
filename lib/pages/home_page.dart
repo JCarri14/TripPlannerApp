@@ -4,7 +4,7 @@ import 'search/search_page.dart';
 import 'package:trip_planner_app/pages/trip_form_screen.dart';
 import '../widgets/custom_shape.dart';
 
-import '../widgets/bottom_sheets.dart';
+import '../widgets/bottom_sheets/event_bottom_sheet.dart';
 import '../widgets/main_drawer.dart';
 
 class HomePage extends StatelessWidget {

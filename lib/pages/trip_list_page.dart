@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../widgets/trip_item.dart';
+import '../widgets/list-items/trip_item.dart';
 import '../blocs/city_bloc.dart';
 import '../blocs/country_bloc.dart';
 import '../api/api_response.dart';

@@ -68,7 +68,6 @@ class HotelService implements HotelRepository {
       'locale': locale,
       'currency': 'EUR',
       'sort': 'STAR_RATING_HIGHEST_FIRST'};
-      print(queryParams);
     final response = await _service.get(_createUri(queryParams), _headers);
     return HotelResponse.fromJson(response).items;
   }

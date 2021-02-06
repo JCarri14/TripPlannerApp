@@ -47,7 +47,7 @@ class FlightService implements FlightRepository {
   @override
   Future<List<Airport>> getAirports(BuildContext context, String city, String country) async {
     _updatePath(context, FlightType.AIRPORT, null);
-    Map<String, String> queryParams = { "query":  city + ", " + country};
+    Map<String, String> queryParams = { "query":  city };
     final response = await _service.get(_createUri(queryParams), _headers);
     return FlightResponse.fromJson(response, FlightType.AIRPORT).items;
   }

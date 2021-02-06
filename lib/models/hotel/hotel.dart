@@ -28,7 +28,6 @@ class Hotel {
   });
 
   factory Hotel.fromJson(Map<String, dynamic> json) {
-    print(json);
     Hotel hotel = Hotel(
       id: json['id'].toString(),
       name: json['name'],
