@@ -9,10 +9,10 @@ import '../../blocs/flight_bloc.dart';
 import '../../providers/trip_provider.dart';
 
 import '../../api/api_response.dart';
-import '../../widgets/flight_card.dart';
+import '../../widgets/cards/flight_card.dart';
 import '../../models/flight/airport.dart';
 import '../../models/flight/flight.dart';
-import '../../widgets/card_item.dart';
+import '../../widgets/cards/card_item.dart';
 
 class FlightSearch extends StatefulWidget {
   static const routeName = '/flight-search';
@@ -33,6 +33,20 @@ class _FlightSearchState extends State<FlightSearch> {
     // TODO: implement dispose
     _flightOrgBloc.dispose();
     super.dispose();
+  }
+
+  void _onFlightReady(BuildContext context, bool isOrigin) {
+    if (isOrigin) {
+      Navigator.of(context).pushNamed(
+      FlightSearch.routeName, 
+      arguments: FlightArguments(
+            isNewTrip: true,
+            isOrigin: false,
+          ));
+    } else {
+      Navigator.of(context).pushNamed(
+      MapPage.routeName, arguments: true);
+    }
   }
 
   @override
@@ -84,7 +98,8 @@ class _FlightSearchState extends State<FlightSearch> {
                           itemBuilder: (_, i) {
                             return FlightCard(
                               flight: flights[i],
-                              isOrigin: args.isOrigin
+                              isOrigin: args.isOrigin,
+                              onTapHandler: () => _onFlightReady(context, args.isOrigin),
                             );
                           },
                         );
