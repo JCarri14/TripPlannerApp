@@ -17,7 +17,6 @@ class TicketedEventsService implements TicketedEventsRepository {
   HotelService() {
     _headers = {
       'Authorization': "Bearer " + env['API_ACCESS_TOKEN_TICKETED_EVENTS'],
-      'useQueryString': 'true'
     };
   }
 
