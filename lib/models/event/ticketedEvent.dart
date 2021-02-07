@@ -49,17 +49,17 @@ class TicketedEvent extends Event {
   @override
   String toJson() {
     return "{"
-        "id: " + this.id + ","
-        "name: " + this.name + ","
-        "category: " + this.category + ","
-        "ranking: " + this.ranking.toString() + ","
-        "latitude: " + this.latitude.toString() + ","
-        "longitude: " + this.longitude.toString() + ","
-        "description: " + this.description + ","
-        "venue: " + this.venue + ","
-        "startDatetime: " + this.startDatetime + ","
-        "endDatetime: " + this.endDatetime + ","
-        "price: " + this.price.toString() + ","
+        '"id": ' + this.id + ","
+        '"name": ' + this.name + ","
+        '"category": ' + this.category + ","
+        '"ranking": ' + this.ranking.toString() + ","
+        '"latitude": ' + this.latitude.toString() + ","
+        '"longitude": ' + this.longitude.toString() + ","
+        '"description": ' + this.description + ","
+        '"venue": ' + this.venue + ","
+        '"startDatetime": ' + this.startDatetime + ","
+        '"endDatetime": ' + this.endDatetime + ","
+        '"price": ' + this.price.toString() + ","
         "}";
   }
 }

@@ -30,12 +30,12 @@ class FreeEvent extends Event {
   @override
   String toJson() {
     return "{"
-        "id: " + this.id + ","
-        "name: " + this.name + ","
-        "category: " + this.category + ","
-        "ranking: " + this.ranking.toString() + ","
-        "latitude: " + this.latitude.toString() + ","
-        "longitude: " + this.longitude.toString() + ","
+        '"id": ' + this.id + ","
+        '"name": ' + this.name + ","
+        '"category": ' + this.category + ","
+        '"ranking": ' + this.ranking.toString() + ","
+        '"latitude": ' + this.latitude.toString() + ","
+        '"longitude": ' + this.longitude.toString() + ","
         "}";
   }
 }

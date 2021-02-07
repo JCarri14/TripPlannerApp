@@ -29,10 +29,10 @@ class Airport {
 
   String toJson(){
     return "{"
-        "airportId: " + this.airportId + ","
-        "cityId: " + this.cityId + ","
-        "placeName: " + this.placeName + ","
-        "countryName: " + this.countryName + ","
+        '"airportId": ' + this.airportId + ","
+        '"cityId": ' + this.cityId + ","
+        '"placeName": ' + this.placeName + ","
+        '"countryName": ' + this.countryName + ","
         "}";
   }
 }

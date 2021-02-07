@@ -16,7 +16,7 @@ class TourDay {
   }
 
   String toJson(){
-    String jsonResult = "{ dayEventsList: [";
+    String jsonResult = '{ "dayEventsList": [ ';
     for(Event event in dayEventsList){
       jsonResult += event.toJson() + ", ";
     }

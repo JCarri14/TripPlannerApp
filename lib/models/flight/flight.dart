@@ -27,9 +27,9 @@ class Flight {
 
   String toJson(){
     return "{"
-        "flightTime: " + this.flightTime + ","
-        "minPrice: " + this.minPrice.toString() + ","
-        "airlineName: " + this.airlineName + ","
+        '"flightTime": ' + this.flightTime + ","
+        '"minPrice": ' + this.minPrice.toString() + ","
+        '"airlineName": ' + this.airlineName + ","
         "}";
   }
 }

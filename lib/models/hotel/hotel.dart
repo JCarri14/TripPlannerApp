@@ -76,22 +76,22 @@ class Hotel {
   }
 
   String toJson(){
-    String landmarkResponse = "{ landmarks: [";
+    String landmarkResponse = '{ "landmarks": [';
     for(Landmark landmark in this.landmarks){
       landmarkResponse += landmark.toJson() + ",";
     }
     landmarkResponse += "] }";
     return "{"
-        "id: " + this.id + ","
-        "name: " + this.name + ","
-        "address: " + this.address + ","
-        "postalCode: " + this.postalCode + ","
-        "thumbnailUrl: " + this.thumbnailUrl + ","
-        "landmarks: " + landmarkResponse + ","
-        "starRating: " + this.starRating.toString() + ","
-        "userRating: " + this.userRating.toString() + ","
-        "latitude: " + this.latitude.toString() + ","
-        "longitude: " + this.longitude.toString() + ","
+        '"id": ' + this.id + ","
+        '"name": ' + this.name + ","
+        '"address": ' + this.address + ","
+        '"postalCode": ' + this.postalCode + ","
+        '"thumbnailUrl": ' + this.thumbnailUrl + ","
+        '"landmarks": ' + landmarkResponse + ","
+        '"starRating": ' + this.starRating.toString() + ","
+        '"userRating": ' + this.userRating.toString() + ","
+        '"latitude": ' + this.latitude.toString() + ","
+        '"longitude": ' + this.longitude.toString() + ","
         "}";
   }
 }

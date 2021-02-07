@@ -24,8 +24,8 @@ class Landmark {
 
   String toJson(){
     return "{"
-        "label: " + this.label +
-        "distance: " + this.distance +
+        '"label": ' + this.label +
+        '"distance": ' + this.distance +
         "}";
   }
 }

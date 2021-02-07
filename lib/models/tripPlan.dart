@@ -32,19 +32,19 @@ class TripPlan {
   }
 
   String toJson(){
-    String tourDaysJson = "{ tourDaysList: [";
+    String tourDaysJson = '{ "tourDaysList": [';
     for(TourDay tourDay in this.tourDaysList){
       tourDaysJson += tourDay.toJson() + ", ";
     }
     tourDaysJson += "] }";
 
     return "{"
-        "originAirport: " + this.originAirport.toJson() + ","
-        "destinationAirport: " + this.destinationAirport.toJson() + ","
-        "departureFlight: " + this.departureFlight.toJson() + ","
-        "returnFlight: " + this.returnFlight.toJson() + ","
-        "hotel: " + this.hotel.toJson() + ","
-        "tourDaysList: " + tourDaysJson + ","
+        '"originAirport": ' + this.originAirport.toJson() + ","
+        '"destinationAirport": ' + this.destinationAirport.toJson() + ","
+        '"departureFlight": ' + this.departureFlight.toJson() + ","
+        '"returnFlight": ' + this.returnFlight.toJson() + ","
+        '"hotel": ' + this.hotel.toJson() + ","
+        '"tourDaysList": ' + tourDaysJson + ","
         "}";
   }
 }

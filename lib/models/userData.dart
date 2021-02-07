@@ -16,7 +16,7 @@ class UserData {
   }
 
   String toJson(){
-    String jsonResult = "{ tripPlanHistory: [";
+    String jsonResult = '{ "tripPlanHistory": [';
     for(TripPlan trip in tripPlanHistory){
       jsonResult += trip.toJson() + ", ";
     }
