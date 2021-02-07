@@ -45,7 +45,7 @@ class _FlightSearchState extends State<FlightSearch> {
           ));
     } else {
       Navigator.of(context).pushNamed(
-      MapPage.routeName, arguments: true);
+      MapPage.routeName, arguments: false);
     }
   }
 
@@ -56,6 +56,7 @@ class _FlightSearchState extends State<FlightSearch> {
 
     String org = tripManager.originAirport.airportId;
     String dst = tripManager.destinationAirport.airportId;
+
     if (args.isOrigin) {
       String orgDate = tripManager.destinationDate;
       _flightOrgBloc.fetchFlights(context, org, dst, orgDate);
@@ -99,7 +100,9 @@ class _FlightSearchState extends State<FlightSearch> {
                             return FlightCard(
                               flight: flights[i],
                               isOrigin: args.isOrigin,
-                              onTapHandler: () => _onFlightReady(context, args.isOrigin),
+                              onTapHandler: () { 
+                                _onFlightReady(context, args.isOrigin);
+                                },
                             );
                           },
                         );

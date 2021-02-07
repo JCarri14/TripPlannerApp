@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../blocs/events_bloc.dart';
 import './location_search.dart';
 import 'search/search_page.dart';
 import 'package:trip_planner_app/pages/trip_form_screen.dart';
@@ -12,6 +14,7 @@ class HomePage extends StatelessWidget {
   final scaffoldState = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
+    EventsBloc eb = Provider.of<EventsBloc>(context);
     BuildContext ctx = context;
     return Scaffold(
       key: scaffoldState,

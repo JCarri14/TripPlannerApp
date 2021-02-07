@@ -17,4 +17,11 @@ class TripPlan {
   this.hotel,
   this.tourDaysList});
 
+  void addTourDay(TourDay tourDay){
+    if(tourDaysList == null){
+      tourDaysList = new List<TourDay>();
+    }
+    tourDaysList.add(tourDay);
+  }
+
 }

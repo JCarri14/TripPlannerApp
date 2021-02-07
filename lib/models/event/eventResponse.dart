@@ -6,17 +6,24 @@ import 'event.dart';
 enum EventType { CITY_ID, FREE_EVENT, TICKETED_EVENT }
 
 class EventResponse {
-  List<Event> items;
+  List<dynamic> items;
 
   EventResponse.fromJson(EventType type, Map<String, dynamic> json){
     if(type == EventType.FREE_EVENT){
-      json['data'].forEach((c) {
-        items.add(FreeEvent.fromJson(c));
-      });
+      if (items == null) items = new List<FreeEvent>();
+      if (json['data'] != null) {
+        json['data'].forEach((c) {
+          items.add(FreeEvent.fromJson(c));
+        });
+        print("Despres for each!!, num elements: " + items.length.toString());
+      }
     } else {
-      json['results'].forEach((c) {
-        items.add(TicketedEvent.fromJson(c));
-      });
+      if (items == null) items = new List<TicketedEvent>();
+      if (json['results'] != null) {
+        json['results'].forEach((c) {
+          items.add(TicketedEvent.fromJson(c));
+        });
+      }
     }
   }
 }

@@ -49,6 +49,11 @@ class _MapPageState extends State<MapPage> {
     markers = [];
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
 
   void addMarker(double lat, double lng) {
     bool exists = markers.contains((e) {
@@ -80,7 +85,6 @@ class _MapPageState extends State<MapPage> {
 
   @override
   Widget build(BuildContext context) {
-    print("did build..................");
     tripManager = Provider.of<TripManager>(context);
     bool isHotels = ModalRoute.of(context).settings.arguments;
 
