@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../api/api_response.dart';
 import '../../providers/trip_provider.dart';
 import '../../blocs/events_bloc.dart';
+import '../../models/event/freeEvent.dart';
+import '../../models/ui/carousel_item.dart';
+
+import '../../widgets/carousels/carousel.dart';
+import '../../widgets/bottom_sheets/event_bottom_sheet.dart';
 
 class EventsDraggable extends StatefulWidget {
   @override
@@ -11,16 +17,48 @@ class EventsDraggable extends StatefulWidget {
 
 class _EventsDraggableState extends State<EventsDraggable> {
 
+  // NETWORKING & STATE
   TripManager tripManager;
   EventsBloc eventsBloc;
-  List<dynamic> categories;
-  double _sliderValue = 30;
-  dynamic _valueChoose;
+  double cityLat;
+  double cityLong;
+  int numItems;
+
+  // INNER LOGIC
+  final List<String> categories = ['Restaurants', 'Shopping', 'Sights', 'Night life',];
+  String _valueChoose;
+  final Map<String, Function> catFunctions = new Map();
+  int currCat;
+  bool didFetch;
+
+  @override
+  void initState() {
+    super.initState();
+    currCat = 0;
+    numItems = 5;
+    didFetch = false;
+    _valueChoose = categories[0];
+  }
+
+  @override
+  void dispose() {
+    eventsBloc.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     tripManager = Provider.of<TripManager>(context);
-    eventsBloc = new EventsBloc();
+    eventsBloc = Provider.of<EventsBloc>(context);
+
+    cityLat = tripManager.destinationCity.latitude;
+    cityLong = tripManager.destinationCity.longitude;
+    
+
+    //if (didFetch == null || !didFetch) {
+      eventsBloc.fetchFreeRestaurantEvents(cityLat.toString(), cityLong.toString(), numItems);
+      //didFetch = true;
+    //}
 
     return DraggableScrollableSheet(
       expand: true,
@@ -74,19 +112,57 @@ class _EventsDraggableState extends State<EventsDraggable> {
               ),
               SizedBox(height: 16),
               StreamBuilder(
-                stream: null,
+                stream: eventsBloc.eventsStream,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    final List<FreeEvent> events = snapshot.data.data ?? [];
+
+                    switch(snapshot.data.status) {
+                      case Status.LOADING:
+                        return Container(
+                          child: Center(
+                            child: Text('Loading'),
+                          ),
+                        );
+                      case Status.COMPLETED:
+                        return Container(
+                          width: double.infinity,
+                          height: 200,
+                          child: ListView.builder(
+                            itemCount: events.length,
+                            itemBuilder: (_, i) {
+                              return ListTile(
+                                title: Text(events[i].name),
+                                subtitle: Text(events[i].id),
+                              );
+                            },
+                          ),
+                        );
+                        /*return CustomCarousel(
+                          items: events.map((e) {
+                            return CarouselItem(title: e.name, subtitle: e.category);
+                          }).toList(),
+                          onTapHandler: (idx) { showEventBottomSheet(context);},
+                          onPageChanged: (idx) {},
+                        );*/
+                    }
+                  }
+                  return Container(
+                    child: Center(child: Text("No items found"),)
+                  );
+                },
               ),
-              //CardItem(title: 'Item 1', subtitle: 'subtitle', imageUrl: '',),
-              SizedBox(height: 16),
+              SizedBox(height: 8,),
               Container(
                 height: 45,
                 width: double.infinity,
+                margin: EdgeInsets.all(8),
                 child: RaisedButton(
-                    onPressed: () {},
-                    color: Colors.blue,
-                    child: Text('Continue')
-                  ),
-              )
+                  color: Colors.blue,
+                  onPressed: () {},
+                  child: Text('Continue')
+                ),
+              ),
             ]),
           )                
         );

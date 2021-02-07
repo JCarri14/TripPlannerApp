@@ -30,10 +30,9 @@ class _HotelDraggableState extends State<HotelDraggable> {
   // NETWORKING & STATE
   TripManager tripManager;
   HotelBloc hotelBloc;
+
   // INNER LOGIC
-  final List<String> categories = ['Cat 1', 'Cat 2', 'Cat 3', 'Cat 4',];
   double _sliderValue;
-  dynamic _valueChoose;
 
   Function onChangeLocation;
   bool didFetch;
@@ -58,7 +57,7 @@ class _HotelDraggableState extends State<HotelDraggable> {
     
     if (didFetch == null || !didFetch)
       hotelBloc.fetchHotels(context, posId, chckIn, chckOut, '500');
-    didFetch = true;
+      didFetch = true;
 
     return DraggableScrollableSheet(
       expand: true,
@@ -102,31 +101,6 @@ class _HotelDraggableState extends State<HotelDraggable> {
                     },
                   )
                 ],
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  margin: EdgeInsets.only(left: 16),
-                  width: 150,
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton(
-                            isExpanded: true,
-                            hint: Text('Categories'),
-                            value: _valueChoose,
-                            onChanged: (newValue) {
-                              setState(() {
-                                _valueChoose = newValue;
-                              });
-                            },
-                            items: categories.map((item) {
-                              return DropdownMenuItem(
-                              value: item,
-                              child: Text(item),
-                              );
-                            }).toList()
-                          ),
-                        ),
-                      )
               ),
               SizedBox(height: 16),
               StreamBuilder(
