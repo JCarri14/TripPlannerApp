@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trip_planner_app/utils/load_fetch_timer.dart';
 import 'package:trip_planner_app/widgets/carousels/carousel.dart';
 
 // NETWORK
@@ -9,7 +10,6 @@ import '../../blocs/hotel_bloc.dart';
 import '../../models/hotel/hotel.dart';
 
 // CAROUSEL
-import '../carousels/item_carousel.dart';
 import '../../models/ui/carousel_item.dart';
 
 // BOTTOM SHEET
@@ -26,7 +26,7 @@ class HotelDraggable extends StatefulWidget {
 }
 
 class _HotelDraggableState extends State<HotelDraggable> {
-
+  LoadFetchTimer loadFetchTimer;
   // NETWORKING & STATE
   TripManager tripManager;
   HotelBloc hotelBloc;
@@ -40,7 +40,7 @@ class _HotelDraggableState extends State<HotelDraggable> {
   @override
   void initState() {
     super.initState();
-    _sliderValue = 30;
+    _sliderValue = 80;
     onChangeLocation = widget.onChangeLocation;
     hotelBloc = new HotelBloc();
     didFetch = false;
@@ -54,9 +54,9 @@ class _HotelDraggableState extends State<HotelDraggable> {
     String posId = tripManager.positionId;
     String chckIn = tripManager.destinationDate;
     String chckOut = tripManager.returnDate;
-    
+
     if (didFetch == null || !didFetch)
-      hotelBloc.fetchHotels(context, posId, chckIn, chckOut, '500');
+      hotelBloc.fetchHotels(context, posId, chckIn, chckOut, _sliderValue.toString());
       didFetch = true;
 
     return DraggableScrollableSheet(
@@ -83,7 +83,7 @@ class _HotelDraggableState extends State<HotelDraggable> {
               ListTile(
                 title: Text('Total Budget left:'),
                 trailing: Text('400'),
-              ),   
+              ),
               ExpansionTile(
                 title: Text('Filter Cost'),
                 trailing: Icon(Icons.keyboard_arrow_down),
@@ -91,13 +91,14 @@ class _HotelDraggableState extends State<HotelDraggable> {
                   Slider(
                     value: _sliderValue,
                     min: 0,
-                    max: 100,
+                    max: 300,
                     divisions: 5,
                     label: _sliderValue.round().toString(),
                     onChanged: (value) {
                       setState(() {
                         _sliderValue = value;
                       });
+                      loadFetchTimer.loadTimer(() => hotelBloc.fetchHotels(context, posId, chckIn, chckOut, _sliderValue.toString()));
                     },
                   )
                 ],
@@ -141,7 +142,7 @@ class _HotelDraggableState extends State<HotelDraggable> {
                 ),
               ),
             ]),
-          )                
+          )
         );
       }
     );

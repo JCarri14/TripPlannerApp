@@ -16,4 +16,20 @@ class Flight {
         airlineName: jsonAirline != null ? jsonAirline['Name'] : ""
     );
   }
+
+  factory Flight.fromJsonResume(Map<String, dynamic> json) {
+    return Flight(
+        flightTime: json['flightTime'],
+        minPrice: json['minPrice'],
+        airlineName: json['airlineName']
+    );
+  }
+
+  String toJson(){
+    return "{"
+        '"flightTime": ' + this.flightTime + ","
+        '"minPrice": ' + this.minPrice.toString() + ","
+        '"airlineName": ' + this.airlineName + ","
+        "}";
+  }
 }

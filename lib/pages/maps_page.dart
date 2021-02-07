@@ -3,7 +3,7 @@ import 'package:latlong/latlong.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import '../providers/trip_provider.dart';
-import 'package:trip_planner_app/utils/LoadFetchTimer.dart';
+import 'package:trip_planner_app/utils/load_fetch_timer.dart';
 
 // FLUTTER MAP
 import 'package:flutter_map/flutter_map.dart';

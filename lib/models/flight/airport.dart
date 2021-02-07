@@ -17,4 +17,22 @@ class Airport {
       countryName: json['CountryName']
     );
   }
+
+  factory Airport.fromJsonResume(Map<String, dynamic> json) {
+    return Airport(
+        airportId: json['airportId'],
+        cityId: json['cityId'],
+        placeName: json['placeName'],
+        countryName: json['countryName']
+    );
+  }
+
+  String toJson(){
+    return "{"
+        '"airportId": ' + this.airportId + ","
+        '"cityId": ' + this.cityId + ","
+        '"placeName": ' + this.placeName + ","
+        '"countryName": ' + this.countryName + ","
+        "}";
+  }
 }

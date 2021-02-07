@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trip_planner_app/utils/LoadFetchTimer.dart';
+import 'package:trip_planner_app/utils/load_fetch_timer.dart';
 
 import '../api/api_response.dart';
 import '../widgets/location_item.dart';
