@@ -18,6 +18,17 @@ class ApiProvider {
       return responseJson;
   }
 
+  Future<dynamic> post(dynamic uri, Map<String,String> content) async {
+    var responseJson;
+      try {
+        final response = await http.post(uri, body: content);
+        responseJson = _returnResponse(response);
+      } on SocketException {
+        throw FetchDataException('No Internet connection');
+      }
+      return responseJson;
+  }
+
   dynamic _returnResponse(http.Response response) {
     switch (response.statusCode) {
       case 200:
@@ -33,6 +44,5 @@ class ApiProvider {
         throw FetchDataException(
             'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
     }
-    
   }
 }

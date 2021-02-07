@@ -1,71 +1,90 @@
 import 'dart:async';
-
 import 'package:trip_planner_app/api/api_response.dart';
 import 'package:trip_planner_app/models/event/event.dart';
 import 'package:trip_planner_app/models/event/freeEvent.dart';
 import 'package:trip_planner_app/models/event/ticketedEvent.dart';
 import 'package:trip_planner_app/services/free_events_service.dart';
 import 'package:trip_planner_app/services/ticketed_events_service.dart';
+import './base_bloc.dart';
+import '../models/event/event_type.dart';
 
-class EventsBloc {
+
+class EventsBloc extends Bloc {
   FreeEventsService _freeEventsService;
   TicketedEventsService _ticketedEventsService;
-  StreamController _eventsController;
 
-  // Objecte que accepta events
+  final Map<ContentType, List<Event>> eventsData = new Map();
+
+  final _eventsController = StreamController<ApiResponse<List<Event>>>();
+  
   StreamSink<ApiResponse<List<Event>>> get eventsSink =>
       _eventsController.sink;
 
   Stream<ApiResponse<List<Event>>> get eventsStream =>
       _eventsController.stream;
 
-
   EventsBloc() {
-    _eventsController = StreamController<ApiResponse<List<Event>>>();
     _freeEventsService = FreeEventsService();
     _ticketedEventsService = TicketedEventsService();
   }
 
-  fetchFreeSightEvents(String latitude, String longitude, int numberOfEvents) async {
-    eventsSink.add(ApiResponse.loading('Fetching Sight Events'));
-    try {
-      List<FreeEvent> freeSightEvent = await _freeEventsService.getFreeSightEvents(latitude, longitude, numberOfEvents);
-      eventsSink.add(ApiResponse.completed(freeSightEvent));
-    } catch (e) {
-      eventsSink.add(ApiResponse.error(e.toString()));
-      print(e);
+  void fetchFreeSightEvents(String latitude, String longitude, int numberOfEvents) async {
+    if (eventsData[ContentType.SIGHT] != null && eventsData[ContentType.SIGHT].isEmpty) {
+      eventsSink.add(ApiResponse.loading('Fetching Sight Events'));
+      try {
+        eventsData[ContentType.SIGHT] = await _freeEventsService.getFreeSightEvents(latitude, longitude, numberOfEvents);
+        eventsSink.add(ApiResponse.completed(eventsData[ContentType.SIGHT]));
+      } catch (e) {
+        eventsSink.add(ApiResponse.error(e.toString()));
+        print(e);
+      }
+    } else {
+      eventsSink.add(ApiResponse.completed(eventsData[ContentType.SIGHT]));
     }
   }
 
   fetchFreeNightlifeEvents(String latitude, String longitude, int numberOfEvents) async {
-    eventsSink.add(ApiResponse.loading('Fetching Nightlife Events'));
-    try {
-      List<FreeEvent> freeNightlifeEvent = await _freeEventsService.getFreeNightlifeEvents(latitude, longitude, numberOfEvents);
-      eventsSink.add(ApiResponse.completed(freeNightlifeEvent));
-    } catch (e) {
-      eventsSink.add(ApiResponse.error(e.toString()));
-      print(e);
+    if (eventsData[ContentType.NIGHT_LIFE] != null && eventsData[ContentType.NIGHT_LIFE].isEmpty) {
+      eventsSink.add(ApiResponse.loading('Fetching Nightlife Events'));
+      try {
+        eventsData[ContentType.NIGHT_LIFE] = await _freeEventsService.getFreeNightlifeEvents(latitude, longitude, numberOfEvents);
+        eventsSink.add(ApiResponse.completed(eventsData[ContentType.NIGHT_LIFE]));
+      } catch (e) {
+        eventsSink.add(ApiResponse.error(e.toString()));
+        print(e);
+      }
+    } else {
+      eventsSink.add(ApiResponse.completed(eventsData[ContentType.NIGHT_LIFE]));
     }
   }
+  
   fetchFreeRestaurantEvents(String latitude, String longitude, int numberOfEvents) async {
-    eventsSink.add(ApiResponse.loading('Fetching Restaurant Events'));
-    try {
-      List<FreeEvent> freeRestaurantEvent = await _freeEventsService.getFreeRestaurantEvents(latitude, longitude, numberOfEvents);
-      eventsSink.add(ApiResponse.completed(freeRestaurantEvent));
-    } catch (e) {
-      eventsSink.add(ApiResponse.error(e.toString()));
-      print(e);
-    }
+    //if (eventsData[ContentType.RESTAURANT] != null && eventsData[ContentType.RESTAURANT].isEmpty) {
+      eventsSink.add(ApiResponse.loading('Fetching Restaurant Events'));
+      try {
+        eventsData[ContentType.RESTAURANT] = await _freeEventsService.getFreeRestaurantEvents(latitude, longitude, numberOfEvents);
+        eventsSink.add(ApiResponse.completed(eventsData[ContentType.RESTAURANT]));
+      } catch (e) {
+        eventsSink.add(ApiResponse.error(e.toString()));
+        print(e);
+      }
+    //} else {
+    //  eventsSink.add(ApiResponse.completed(eventsData[ContentType.RESTAURANT]));
+    //}
   }
 
   fetchFreeShoppingEvents(String latitude, String longitude, int numberOfEvents) async {
-    eventsSink.add(ApiResponse.loading('Fetching Shopping Events'));
-    try {
-      List<FreeEvent> freeShoppingEvent = await _freeEventsService.getFreeShoppingEvents(latitude, longitude, numberOfEvents);
-      eventsSink.add(ApiResponse.completed(freeShoppingEvent));
-    } catch (e) {
-      eventsSink.add(ApiResponse.error(e.toString()));
-      print(e);
+    if (eventsData[ContentType.SHOPPING] != null && eventsData[ContentType.SHOPPING].isEmpty) {
+      eventsSink.add(ApiResponse.loading('Fetching Shopping Events'));
+      try {
+        eventsData[ContentType.SHOPPING] = await _freeEventsService.getFreeShoppingEvents(latitude, longitude, numberOfEvents);
+        eventsSink.add(ApiResponse.completed(eventsData[ContentType.SHOPPING]));
+      } catch (e) {
+        eventsSink.add(ApiResponse.error(e.toString()));
+        print(e);
+      }
+    } else {
+      eventsSink.add(ApiResponse.completed(eventsData[ContentType.SHOPPING]));
     }
   }
 
@@ -124,7 +143,8 @@ class EventsBloc {
     }
   }
 
-  dispose() {
+  @override
+  void dispose() {
     _eventsController?.close();
   }
 }
