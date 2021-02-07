@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
 
 import 'package:trip_planner_app/pages/trip_form_screen.dart';
@@ -7,6 +8,7 @@ import 'package:trip_planner_app/pages/trip_form_screen.dart';
 // PROVIDERS
 import './providers/session.dart';
 import './providers/trip_provider.dart';
+import './blocs/events_bloc.dart';
 
 // PAGES
 import './pages/trip_resume.dart';
@@ -29,6 +31,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        Provider<EventsBloc>(create: (ctx) => EventsBloc()),
         ChangeNotifierProvider(create: (ctx) => Session()),
         ChangeNotifierProvider(create: (ctx) => TripManager()),
       ],
