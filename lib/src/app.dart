@@ -9,7 +9,7 @@ import "./config/theme/app_themes.dart";
 import "./config/routes/routes.dart";
 
 // PROVIDERS
-
+import "./business_logic/providers.dart";
 
 // PAGES
 import "./ui/pages.dart";
@@ -17,7 +17,12 @@ import "./ui/pages.dart";
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MultiProvider(
+      providers: [
+        Provider(create: (_) => SessionProvider()),
+        ChangeNotifierProvider(create: (ctx) => TripCreationProvider()),
+      ],
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'TripPlanner',
         theme: AppThemes.lightTheme,
@@ -38,6 +43,7 @@ class MyApp extends StatelessWidget {
         onUnknownRoute: (settings) {
           return MaterialPageRoute(builder: (_) => UnkownPage());
         },
+      ),
     );
 
   }

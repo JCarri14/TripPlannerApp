@@ -9,6 +9,7 @@ import "../../network/api/api_response.dart";
 // MODELS
 import '../models.dart';
 
+// Used as StreamProvider
 class FlightProvider {
   late final FlightService _flightService;
   late StreamController<ApiResponse<List<Flight>>> _listController;
