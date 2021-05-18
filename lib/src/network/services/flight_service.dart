@@ -24,8 +24,8 @@ class FlightService implements FlightRepository {
   ApiProvider _service = ApiProvider();
 
   FlightService() {
-    _headers['x-rapidapi-key'] = (env['API_KEY'] != null ? env['API_KEY']: "")! ;
-    _headers['x-rapidapi-host'] = (env['API_HOST_FLIGHT'] != null ? env['API_HOST_FLIGHT']: "")!;
+    _headers['x-rapidapi-key'] = (env['API_KEY'] != null ? env['API_KEY']: "") ;
+    _headers['x-rapidapi-host'] = (env['API_HOST_FLIGHT'] != null ? env['API_HOST_FLIGHT']: "");
     _headers['useQueryString'] = 'true';
   }
 
@@ -38,14 +38,14 @@ class FlightService implements FlightRepository {
 
   void _updatePath(BuildContext context, FlightType type, Map<String, String> pathParams) {
     Locale myLocale = Localizations.localeOf(context);
-    String lang = myLocale.languageCode + "-" + (myLocale.countryCode)!;
+    String lang = myLocale.languageCode + "-" + (myLocale.countryCode);
     switch (type) {
       case FlightType.AIRPORT:
-        _pathUrl = "/apiservices/autosuggest/v1.0/" + (myLocale.countryCode)! + "/EUR/" + lang + "/";
+        _pathUrl = "/apiservices/autosuggest/v1.0/" + (myLocale.countryCode) + "/EUR/" + lang + "/";
         break;
       case FlightType.ROUTE:
-        _pathUrl = "/apiservices/browsedates/v1.0/" + (myLocale.countryCode)! + "/EUR/" + lang + "/"
-            + (pathParams['origin'])! + '/' + (pathParams['destination'])! + '/' + (pathParams['arrivalDate'])! + "/";
+        _pathUrl = "/apiservices/browsedates/v1.0/" + (myLocale.countryCode) + "/EUR/" + lang + "/"
+            + (pathParams['origin']) + '/' + (pathParams['destination']) + '/' + (pathParams['arrivalDate']) + "/";
         break;
     }
   }
@@ -55,7 +55,7 @@ class FlightService implements FlightRepository {
     _updatePath(context, FlightType.AIRPORT, {});
     Map<String, String> queryParams = { "query":  city };
     final response = await _service.get(_createUri(queryParams), _headers);
-    return FlightHelper.normalizeAirports(response);
+    return normalizeAirports(response);
   }
 
   @override
@@ -63,7 +63,7 @@ class FlightService implements FlightRepository {
     Map<String, String> pathParams = { 'origin':  origin, 'destination': destination, 'arrivalDate': date };
     _updatePath(context, FlightType.ROUTE, pathParams);
     final response = await _service.get(_createUri({}), _headers);
-    return FlightHelper.normalizeFlights(response);
+    return normalizeFlights(response);
   }
 
 }
