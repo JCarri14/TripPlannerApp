@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import "../models.dart";
+import '../../models.dart';
 
 class TripCreationProvider with ChangeNotifier {
   Trip _trip;
@@ -9,6 +9,7 @@ class TripCreationProvider with ChangeNotifier {
   DateTime _destinationDay = DateTime.now();
   DateTime _returnDay = DateTime.now();
   int _budget;
+  String _stringBudget;
   String _cityId;
   int _totalDays;
 
@@ -18,6 +19,7 @@ class TripCreationProvider with ChangeNotifier {
     _destinationCity = new City(),
     _cityId = "",
     _totalDays = 0,
+    _stringBudget = "",
     _budget = 0;
 
 
@@ -105,6 +107,14 @@ class TripCreationProvider with ChangeNotifier {
 
   Flight get returnFlight {
     return _trip.returnFlight;
+  }
+
+  String get stringBudget {
+    return _stringBudget;
+  }
+
+  int get budget {
+    return _budget;
   }
 
 }

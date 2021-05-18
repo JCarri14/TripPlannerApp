@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
 import '../../storage/local_storage.dart';
-import '../models.dart';
 
 class SessionProvider {
   final _storage = new LocalStorage();
@@ -11,9 +9,9 @@ class SessionProvider {
     authToken = await _storage.readData("auth-token");
   }
 
-  Future<void> writeAuthToken(String? value) async {
+  Future<void> writeAuthToken(String value) async {
     isLoggedIn = value != null ? true : false;
-    await _storage.writeData("auth-token", value!);
+    await _storage.writeData("auth-token", value);
   }
 
   Future<String> readAuthToken() async {
