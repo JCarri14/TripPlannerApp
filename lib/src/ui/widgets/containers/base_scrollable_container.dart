@@ -3,7 +3,7 @@ class BaseScrollableContainer extends StatelessWidget {
 
   final Widget child;
 
-  BaseScrollableContainer({required this.child});
+  BaseScrollableContainer({this.child});
 
   @override
   Widget build(BuildContext context) {

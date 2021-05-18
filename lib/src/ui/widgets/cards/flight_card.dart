@@ -14,10 +14,10 @@ class FlightCard extends StatelessWidget {
   static defaultTapHandler() {}
 
   FlightCard({
-    required this.flight, 
+    this.flight, 
     this.flightDate = "",
-    required this.originAirport,
-    required this.destinationAirport,
+    this.originAirport,
+    this.destinationAirport,
     this.onTapHandler: defaultTapHandler 
   });
 

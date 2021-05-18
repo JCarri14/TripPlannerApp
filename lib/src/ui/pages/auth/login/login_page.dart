@@ -17,7 +17,10 @@ class LoginPage extends StatelessWidget {
       body: SafeArea(
         child: GestureDetector(
           onTap: () {
-            FocusScope.of(context).requestFocus(new FocusNode());
+            FocusScopeNode currentFocus = FocusScope.of(context);
+            if (!currentFocus.hasPrimaryFocus) {
+              currentFocus.unfocus();
+            }
           },
           child: Container(    
             padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),      
@@ -35,7 +38,7 @@ class LoginPage extends StatelessWidget {
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontWeight: FontWeight.bold,
-                        fontSize: Theme.of(context).textTheme.headline4!.fontSize
+                        fontSize: Theme.of(context).textTheme.headline4.fontSize
                       )),
                   ),
                   SizedBox(height: 16),

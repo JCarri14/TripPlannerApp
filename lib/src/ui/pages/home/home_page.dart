@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import "../../../config/routes/routes.dart";
 import "../../widgets/containers/base_scrollable_container.dart";
 import "./home_header.dart";
@@ -26,7 +25,7 @@ class HomePage extends StatelessWidget {
         child: Icon(Icons.add, color: Colors.white),
         backgroundColor: Theme.of(context).primaryColor,
         onPressed: () {
-          Navigator.of(context).pushNamed(tripCreationRoute);
+          Navigator.of(context).pushNamed(tripFormRoute);
         },
       ),
     );

@@ -6,7 +6,7 @@ import "../../../../utils/form_validators.dart";
 class LoginForm extends StatefulWidget {
   final Function submitCallback;
 
-  LoginForm({required this.submitCallback});
+  LoginForm({this.submitCallback});
 
   @override
   _LoginFormState createState() => _LoginFormState();
@@ -40,7 +40,7 @@ class _LoginFormState extends State<LoginForm> {
             color: Theme.of(context).primaryColor,
             textColor: Colors.white,
             onPressed: () {
-							if (_formKey.currentState!.validate()) {
+							if (_formKey.currentState.validate()) {
 								widget.submitCallback(context, _formKey.currentState);
 							}
 						}, 

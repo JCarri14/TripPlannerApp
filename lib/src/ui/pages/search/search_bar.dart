@@ -4,7 +4,7 @@ class SearchInput extends StatelessWidget {
   
   final ValueChanged<String> onChanged;
 
-  SearchInput({required this.onChanged}): super();
+  SearchInput({this.onChanged}): super();
   
   @override
   Widget build(BuildContext context) {

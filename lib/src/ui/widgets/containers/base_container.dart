@@ -3,7 +3,7 @@ class BaseContainer extends StatelessWidget {
 
   final Widget child;
 
-  BaseContainer({required this.child});
+  BaseContainer({this.child});
 
   @override
   Widget build(BuildContext context) {

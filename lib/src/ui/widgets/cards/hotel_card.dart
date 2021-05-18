@@ -6,7 +6,7 @@ class HotelCard extends StatelessWidget {
 
   final Hotel hotel;
 
-  HotelCard({required this.hotel});
+  HotelCard({this.hotel});
 
   @override
   Widget build(BuildContext context) {
