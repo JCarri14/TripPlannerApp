@@ -1,5 +1,7 @@
 import '../models.dart';
 
+enum HotelType { CITY_SEARCH, HOTEL_SEARCH }
+
 List<Hotel> normalizeHotels(Map<String, dynamic> json){
   List<Hotel> hotels = <Hotel>[];
   json['data']['body']['searchResults']['results'].forEach((c) {

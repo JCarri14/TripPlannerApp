@@ -1,7 +1,7 @@
 import '../models.dart';
 import 'dart:math';
 
-enum EventType { FREE_EVENT, TICKETED_EVENT }
+enum EventType { CITY_ID, FREE_EVENT, TICKETED_EVENT }
 
 List<Event> normalizeEvents(EventType type, Map<String, dynamic> json) {
   List<Event> events = <Event>[];

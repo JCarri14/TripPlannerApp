@@ -1,5 +1,7 @@
 import '../models.dart';
 
+enum GeoType { CITY, REGION, COUNTRY }
+
 List<City> normalizeCities(Map<String, dynamic> json) {
   List<City> cities = <City>[];
   if (json['data'] != null) {

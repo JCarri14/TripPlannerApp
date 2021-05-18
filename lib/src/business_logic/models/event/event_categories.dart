@@ -1,6 +1,10 @@
 enum ContentType {
   COMMERCIAL,
   FOOD,
+  RESTAURANT,
+  SHOPPING,
+  SIGHT,
+  NIGHT_LIFE,
   ACCOMMODATION,
   EDUCATION,
   CHILDCARE,
@@ -17,6 +21,9 @@ enum ContentType {
   PUBLIC_TRANSPORT,
   ADMINISTRATIVE,
 }
+
+enum FreeEventCategory {SIGHTS, NIGHTLIFE, RESTAURANT, SHOPPING}
+
 
 const Map<ContentType, String> categories = {
   ContentType.COMMERCIAL: "commercial",
