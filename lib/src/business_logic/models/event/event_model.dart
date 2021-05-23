@@ -2,14 +2,17 @@ class Event {
   final String id;
   final String name;
   final String category;
-  final int ranking;
+  final double ranking;
   final double latitude;
   final double longitude;
   final String description;
   final String venue;
   final String startDatetime;
   final String endDatetime;
-  final int price;
+  final double price;
+  final String thumbnail;
+  bool isExpanded;
+  bool isSelected;
 
   Event({
     this.id = "", 
@@ -22,7 +25,10 @@ class Event {
     this.venue = "",
     this.startDatetime = "",
     this.endDatetime = "",
-    this.price = -1
+    this.price = -1,
+    this.thumbnail = "",
+    this.isExpanded = false,
+    this.isSelected = false,
   });
 
   factory Event.fromJson(Map<String, dynamic> json){
@@ -62,6 +68,7 @@ class Event {
       '"startDatetime": ' + this.startDatetime + ","
       '"endDatetime": ' + this.endDatetime + ","
       '"price": ' + this.price.toString() + ","
+      '"thumbnail" ' + this.thumbnail + ","
       "}";
   }
 }
