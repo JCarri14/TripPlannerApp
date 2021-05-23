@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-void showEventBottomSheet(ctx) {
+void showEventBottomSheet(ctx, Widget content) {
   showModalBottomSheet(context: ctx, builder: (BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.5,
@@ -11,7 +11,9 @@ void showEventBottomSheet(ctx) {
         )
       ),
       child: SingleChildScrollView(
-        child: Container()
+        child: Container(
+          child: content
+        )
       ),
     );
   });

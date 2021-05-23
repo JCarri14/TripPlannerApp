@@ -12,6 +12,7 @@ import "../../../business_logic/models.dart";
 import "../../../config/routes/routes.dart";
 
 import 'list_view_page.dart';
+import 'map_view_page.dart';
 
 class EventSelectionPage extends StatefulWidget {
 
@@ -104,11 +105,7 @@ class _EventSelectionPageState extends State<EventSelectionPage> {
           child: TabBarView (
               children: [
                 ListViewPage(),
-                Container(
-                  child: Center(
-                    child: Text("Map View")
-                  )
-                )
+                MapViewPage()
               ],
             ),
         )

@@ -4,18 +4,17 @@ import 'package:provider/provider.dart';
 import '../../utils/carousel_item.dart';
 
 import '../../widgets/carousels/carousel.dart';
-import '../../widgets/bottom_sheets/event_bottom_sheet.dart';
+import '../../widgets/bottom_sheets/event_details_bottom_sheet.dart';
+import "../../pages/events/category_selector.dart";
 
 //PROVIDERS
 import "../../../business_logic/providers.dart";
 
+//ROUTES
+import "../../../config/routes/routes.dart";
+
 //MODELS
 import "../../../business_logic/models.dart";
-
-
-//OTHER
-import '../../../network/api/api_response.dart';
-
 
 class EventsDraggable extends StatefulWidget {
   @override
@@ -49,7 +48,6 @@ class _EventsDraggableState extends State<EventsDraggable> {
 
   @override
   void dispose() {
-    eventProvider.dispose();
     super.dispose();
   }
 
@@ -58,20 +56,38 @@ class _EventsDraggableState extends State<EventsDraggable> {
     tripManager = Provider.of<TripCreationProvider>(context);
     eventProvider = Provider.of<EventProvider>(context);
 
-    cityLat = tripManager.destinationCity.latitude;
-    cityLong = tripManager.destinationCity.longitude;
+    List<Event> events = eventProvider.categoryEvents;
     
+    Widget eventsContent;
 
-    //if (didFetch == null || !didFetch) {
-      eventProvider.fetchFreeRestaurantEvents(cityLat.toString(), cityLong.toString(), numItems);
-      //didFetch = true;
-    //}
+    if (eventProvider.isLoading) {
+      eventsContent = Container(
+        child: Center(
+          child: Text('Loading'),
+        ),
+      );
+    }
+    if (eventProvider.isLoaded) {
+      eventsContent = CustomCarousel(
+        items: events.map((e) {
+          return CarouselItem(title: e.name, subtitle: e.category, isSelected: tripManager.isEventSelected(e));
+        }).toList(),
+        onTapHandler: (idx) { showEventDetailsBottomSheet(context, events[idx]);},
+        onPageChanged: (idx) {},
+      );
+    }
+
+    if (eventProvider.isError) {
+      eventsContent = Container(
+        child: Center(child: Text("No items found\nfor this category"),)
+      );
+    }
 
     return DraggableScrollableSheet(
       expand: true,
-      initialChildSize: 0.5,
+      initialChildSize: 0.55,
       minChildSize: 0.08,
-      maxChildSize: 0.6,
+      maxChildSize: 0.55,
       builder: (_, controller) {
         return Container(
           width: double.infinity,
@@ -87,78 +103,14 @@ class _EventsDraggableState extends State<EventsDraggable> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 SizedBox(height: 16),
-                Text('Activities', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                //Text('Activities (day'+ tripManager.currDay.toString() +')', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              ListTile(
-                title: Text('Total Budget left:'),
-                trailing: Text('400'),
-              ),   
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  margin: EdgeInsets.only(left: 16),
-                  width: 150,
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton(
-                            isExpanded: true,
-                            hint: Text('Categories'),
-                            value: _valueChoose,
-                            onChanged: (newValue) {
-                              setState(() {
-                                _valueChoose = newValue;
-                              });
-                            },
-                            items: categories.map((item) {
-                              return DropdownMenuItem(
-                              value: item,
-                              child: Text(item),
-                              );
-                            }).toList()
-                          ),
-                        ),
-                      )
+                Text('Events', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold)),
+                //Text('Activities (day'+ tripManager.currDay.toString() +')', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),   
+              EventCategorySelector(
+                key: Key("EventCategorySelectorMap")
               ),
-              SizedBox(height: 16),
-              StreamBuilder(
-                stream: eventProvider.eventsStream,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    final List<Event> events = snapshot.data.data ?? [];
-
-                    switch(snapshot.data.status) {
-                      case Status.LOADING:
-                        return Container(
-                          child: Center(
-                            child: Text('Loading'),
-                          ),
-                        );
-                      case Status.COMPLETED:
-                        return Container(
-                          width: double.infinity,
-                          height: 200,
-                          child: ListView.builder(
-                            itemCount: events.length,
-                            itemBuilder: (_, i) {
-                              return ListTile(
-                                title: Text(events[i].name),
-                                subtitle: Text(events[i].id),
-                              );
-                            },
-                          ),
-                        );
-                        return CustomCarousel(
-                          items: events.map((e) {
-                            return CarouselItem(title: e.name, subtitle: e.category);
-                          }).toList(),
-                          onTapHandler: (idx) { showEventBottomSheet(context);},
-                          onPageChanged: (idx) {},
-                        );
-                    }
-                  }
-                  return Container(
-                    child: Center(child: Text("No items found"),)
-                  );
-                },
+              SizedBox(height: 8),
+              Container(
+                child: eventsContent
               ),
               SizedBox(height: 8,),
               Container(
@@ -166,7 +118,10 @@ class _EventsDraggableState extends State<EventsDraggable> {
                 width: double.infinity,
                 margin: EdgeInsets.all(8),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(
+                      tripRoute);
+                  },
                   child: Text('Continue'),
                   style: ElevatedButton.styleFrom(
                     primary: Theme.of(context).primaryColor
