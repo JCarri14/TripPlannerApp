@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider(create: (_) => SessionProvider()),
+        ChangeNotifierProvider(create: (_) => EventProvider()),
         ChangeNotifierProvider(create: (ctx) => TripCreationProvider()),
       ],
       child: MaterialApp(
@@ -29,7 +30,9 @@ class MyApp extends StatelessWidget {
           homeRoute: (ctx) => HomePage(),
           loginRoute: (ctx) => LoginPage(),
           registerRoute: (ctx) => RegisterPage(),
+          tripRoute: (ctx) => TripPage(),
           tripFormRoute: (ctx) => TripFormPage(),
+          eventSelectionRoute: (ctx) => EventSelectionPage(),
           flightSearchRoute: (ctx) => FlightSearchPage(),
           hotelSearchRoute: (ctx) => HotelSearchPage(),
           airportSearchRoute: (ctx) => AirportSearchPage(),

@@ -18,6 +18,9 @@ const String flightSearchRoute = "/flight-search";
 const String hotelRoute = "/hotel/:id";
 const String hotelSearchRoute = "/search/hotel";
 
+//EVENTS
+const String eventSelectionRoute = "/search/events";
+
 //TRIPS
-const String tripRoute = "trip/:id";
+const String tripRoute = "trip/";
 const String tripFormRoute = "/create/trip"; 
