@@ -13,9 +13,9 @@ import "../../business_logic/models.dart";
 import "../../business_logic/helpers.dart";
 
 class TicketedEventsService implements TicketedEventsRepository {
-  static const String _baseUrl = "api.predicthq.com/v1";
+  static const String _baseUrl = "api.predicthq.com";
   static const int fetchLimit = 5; // free-version constraint
-  String _pathUrl = "/events";
+  String _pathUrl = "/v1/events";
   Map<String, String> _headers;
   ApiProvider _service = ApiProvider();
 
@@ -35,10 +35,10 @@ class TicketedEventsService implements TicketedEventsRepository {
   void _updatePath(EventType type) {
     switch (type) {
       case EventType.CITY_ID:
-        _pathUrl = "/places";
+        _pathUrl = "/v1/places";
         break;
       default:
-        _pathUrl = "/events";
+        _pathUrl = "/v1/events";
         break;
     }
   }
@@ -48,46 +48,86 @@ class TicketedEventsService implements TicketedEventsRepository {
     _updatePath(EventType.CITY_ID);
     Map<String, String> queryParams = {'location': "@" + GeoService.generateLocationString(latitude, longitude), 'type': 'locality', 'limit': "1" };
     final response = await _service.get(_createUri(queryParams), _headers);
+    print("RESPONSE");
+    print(response);
     return parseEventCityID(response);
   }
 
   @override
-  Future<List<Event>> getTicketedExpoEvents(String day, String id, int numberOfEvents) async {
+  Future<List<Event>> getTicketedExpoEvents(String day, String location, int numberOfEvents) async {
     _updatePath(EventType.TICKETED_EVENT);
-    Map<String, String> queryParams = { 'category': 'expos', 'place.exact': id, 'start.gte': day, 'start.lte': day, 'limit': numberOfEvents.toString() };
+    Map<String, String> queryParams = { 
+      'category': 'expos', 
+      'location_around.origin': location, 
+      'location_around.offset:': '50km',
+      'start.gte': day, 
+      'start.lte': day, 
+      'limit': numberOfEvents.toString() };
     final response = await _service.get(_createUri(queryParams), _headers);
     return normalizeEvents(EventType.TICKETED_EVENT, response);
   }
 
   @override
-  Future<List<Event>> getTicketedConcertEvents(String day, String id, int numberOfEvents) async {
+  Future<List<Event>> getTicketedConcertEvents(String day, String location, int numberOfEvents) async {
     _updatePath(EventType.TICKETED_EVENT);
-    Map<String, String> queryParams = { 'category': 'concerts', 'place.exact': id, 'start.gte': day, 'start.lte': day, 'limit': numberOfEvents.toString() };
+    Map<String, String> queryParams = { 
+      'category': 'concerts', 
+      'location_around.origin': location, 
+      'location_around.offset:': '50km',
+      'start.gte': day, 
+      'start.lte': day, 
+      'limit': numberOfEvents.toString() };
     final response = await _service.get(_createUri(queryParams), _headers);
+    print("RESPONSE");
+    print(response);
     return normalizeEvents(EventType.TICKETED_EVENT, response);
   }
 
   @override
-  Future<List<Event>> getTicketedFestivalEvents(String day, String id, int numberOfEvents) async {
+  Future<List<Event>> getTicketedFestivalEvents(String day, String location, int numberOfEvents) async {
     _updatePath(EventType.TICKETED_EVENT);
-    Map<String, String> queryParams = { 'category': 'festivals', 'place.exact': id, 'start.gte': day, 'start.lte': day, 'limit': numberOfEvents.toString() };
+    Map<String, String> queryParams = { 
+      'category': 'festivals', 
+      'location_around.origin': location, 
+      'location_around.offset:': '50km',
+      'start.gte': day, 
+      'start.lte': day, 
+      'limit': numberOfEvents.toString() };
     final response = await _service.get(_createUri(queryParams), _headers);
+    print("RESPONSE");
+    print(response);
     return normalizeEvents(EventType.TICKETED_EVENT, response);
   }
 
   @override
-  Future<List<Event>> getTicketedArtEvents(String day, String id, int numberOfEvents) async {
+  Future<List<Event>> getTicketedArtEvents(String day, String location, int numberOfEvents) async {
     _updatePath(EventType.TICKETED_EVENT);
-    Map<String, String> queryParams = { 'category': 'performing-arts', 'place.exact': id, 'start.gte': day, 'start.lte': day, 'limit': numberOfEvents.toString() };
+    Map<String, String> queryParams = { 
+      'category': 'performing-arts', 
+      'location_around.origin': location, 
+      'location_around.offset:': '50km',
+      'start.gte': day, 
+      'start.lte': day, 
+      'limit': numberOfEvents.toString() };
     final response = await _service.get(_createUri(queryParams), _headers);
+    print("RESPONSE");
+    print(response);
     return normalizeEvents(EventType.TICKETED_EVENT, response);
   }
 
   @override
-  Future<List<Event>> getTicketedSportEvents(String day, String id, int numberOfEvents) async {
+  Future<List<Event>> getTicketedSportEvents(String day, String location, int numberOfEvents) async {
     _updatePath(EventType.TICKETED_EVENT);
-    Map<String, String> queryParams = { 'category': 'sports', 'place.exact': id, 'start.gte': day, 'start.lte': day, 'limit': numberOfEvents.toString() };
+    Map<String, String> queryParams = { 
+      'category': 'sports', 
+      'location_around.origin': location, 
+      'location_around.offset:': '50km',
+      'start.gte': day, 
+      'start.lte': day, 
+      'limit': numberOfEvents.toString() };
     final response = await _service.get(_createUri(queryParams), _headers);
+    print("RESPONSE");
+    print(response);
     return normalizeEvents(EventType.TICKETED_EVENT, response);
   }
 
