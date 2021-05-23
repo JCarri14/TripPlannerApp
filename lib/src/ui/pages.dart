@@ -5,6 +5,9 @@ export "./pages/home/home_page.dart";
 export "./pages/auth/login/login_page.dart";
 export "./pages/auth/register/register_page.dart";
 
+//EVENTS
+export "./pages/events/events_page.dart";
+
 //AIRPORT
 export 'pages/airport/airport_search_page.dart';
 
@@ -13,6 +16,7 @@ export "./pages/search/search_page.dart";
 
 //TRIP
 export "./pages/trip/trip_form_page.dart";
+export "./pages/trip/trip_page.dart";
 
 //FLIGHT
 export 'pages/flight/flights_search_page.dart';

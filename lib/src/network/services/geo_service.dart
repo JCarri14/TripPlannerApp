@@ -63,7 +63,7 @@ class GeoService implements GeoRepository {
       longitudeName = "+" + longitude.toStringAsFixed(4);
     }
 
-    return latitudeName + longitudeName;
+    return latitudeName + ", " + longitudeName;
   }
 
   /// Determine the current position of the device.

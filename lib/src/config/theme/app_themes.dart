@@ -60,6 +60,7 @@ class AppThemes {
     primaryColorLight: _lightPrimaryColor,
     primaryColorDark: _darkPrimaryColor,
     primarySwatch: createMaterialColor(_primaryColor),
+    canvasColor: Colors.transparent,
     snackBarTheme: SnackBarThemeData(
       backgroundColor: _lightSnackBarBackgroundColor
     ),
