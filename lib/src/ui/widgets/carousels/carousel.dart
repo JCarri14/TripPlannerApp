@@ -34,11 +34,23 @@ class CustomCarousel extends StatelessWidget {
                 child: Material(
                     borderRadius: BorderRadius.circular(16),
                     elevation: 8.0,
+                    color: items[index].isSelected ? Theme.of(context).primaryColorLight : Colors.white,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                      Text(items[index].title, overflow: TextOverflow.ellipsis, maxLines: 2, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
-                      Text(items[index].subtitle, textAlign: TextAlign.center)
+                      Text(
+                        items[index].title, 
+                        overflow: TextOverflow.ellipsis, 
+                        maxLines: 2, 
+                        style: TextStyle(
+                          fontSize: 16, 
+                          color: Colors.black, 
+                          fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
+                      SizedBox(height: 4),
+                      Text(
+                        items[index].subtitle, 
+                        style: TextStyle(color: items[index].isSelected ? Colors.white : Colors.black),
+                        textAlign: TextAlign.center)
                     ],),
                   ),
               ),

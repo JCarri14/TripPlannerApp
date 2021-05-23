@@ -20,7 +20,6 @@ import '../../widgets/draggables/hotel_draggable.dart';
 import '../../widgets/draggables/events_draggable.dart';
 
 class MapPage extends StatefulWidget {
-  static const routeName = '/map';
   @override
   _MapPageState createState() => _MapPageState();
 }
