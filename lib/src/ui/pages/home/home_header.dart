@@ -56,6 +56,7 @@ class HomeHeader extends StatelessWidget {
               child: Material(
                 elevation: 8.0,
                 borderRadius: BorderRadius.circular(8),
+                color: Colors.white,
                 child: Padding(
                   padding: EdgeInsets.all(8),
                   child: Row(

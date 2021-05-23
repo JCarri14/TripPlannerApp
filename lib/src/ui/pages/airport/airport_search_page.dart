@@ -126,6 +126,7 @@ class _AirportSearchPageState extends State<AirportSearchPage> {
             Material(
               elevation: 8.0,
               borderRadius: BorderRadius.circular(8),
+              color: Colors.white,
               child: ListTile(
                 title: Text(args.isOrigin ? 'Origin Airport':'Destination Airport'),
                 trailing: Icon(args.isOrigin ? Icons.flight_takeoff:Icons.flight_land),

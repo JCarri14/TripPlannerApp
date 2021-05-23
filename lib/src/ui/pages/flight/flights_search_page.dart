@@ -39,8 +39,8 @@ class _FlightSearchPageState extends State<FlightSearchPage> {
             isOrigin: false,
           ));
     } else {
-      //Navigator.of(context).pushNamed(
-      //MapPage.routeName, arguments: false);
+      Navigator.of(context).pushNamed(
+      eventSelectionRoute, arguments: false);
     }
   }
 
@@ -49,16 +49,20 @@ class _FlightSearchPageState extends State<FlightSearchPage> {
     final FlightArguments args = (ModalRoute.of(context).settings.arguments as FlightArguments);
     final TripCreationProvider tripManager = Provider.of<TripCreationProvider>(context);
 
-    String org = tripManager.originAirport.airportId;
-    String dst = tripManager.destinationAirport.airportId;
+    String orgId;
+    String dstId;
     String flightDate;
+
     if (args.isOrigin) {
+      orgId = tripManager.originAirport.airportId;
+      dstId = tripManager.destinationAirport.airportId;
       flightDate = tripManager.destinationDate;
-      _flightProvider.fetchFlights(context, org, dst, flightDate);
     } else {
+      orgId = tripManager.destinationAirport.airportId;
+      dstId = tripManager.originAirport.airportId;
       flightDate = tripManager.returnDate;
-      _flightProvider.fetchFlights(context, dst, org, flightDate);
     }
+    _flightProvider.fetchFlights(context, orgId, dstId, flightDate);
     
     return Scaffold(
       appBar: AppBar(
@@ -72,8 +76,9 @@ class _FlightSearchPageState extends State<FlightSearchPage> {
             Material(
               elevation: 8.0,
               borderRadius: BorderRadius.circular(8),
+              color: Colors.white,
               child: ListTile(
-                title: Text(args.isOrigin ? tripManager.originAirport.placeName:tripManager.destinationAirport.placeName + ' Airport'),
+                title: Text((args.isOrigin ? tripManager.originAirport.placeName:tripManager.destinationAirport.placeName) + ' Airport'),
                 subtitle: args.isOrigin ? Text('Origin'):Text('Destination'),
                 trailing: Icon(args.isOrigin ? Icons.flight_takeoff:Icons.flight_land),
               )
@@ -95,12 +100,12 @@ class _FlightSearchPageState extends State<FlightSearchPage> {
                           itemBuilder: (_, i) {
                             return FlightCard(
                               flight: flights[i],
-                              destinationAirport: tripManager.destinationAirport,
-                              originAirport: tripManager.originAirport,
+                              destinationAirport: args.isOrigin ? tripManager.destinationAirport : tripManager.originAirport,
+                              originAirport: args.isOrigin ? tripManager.originAirport : tripManager.destinationAirport,
                               flightDate: flightDate,
                               onTapHandler: () { 
                                 _onFlightReady(context, args.isOrigin);
-                                },
+                              },
                             );
                           },
                         );
