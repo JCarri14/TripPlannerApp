@@ -73,6 +73,24 @@ class TripCreationProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void addTripEvent(Event event) {
+    _trip.addEvent(event);
+    print("Trip added");
+    notifyListeners();
+  }
+
+  void removeTripEvent(String id) {
+    _trip.removeEvent(id);
+    notifyListeners();
+  }
+
+  bool isEventSelected(Event e) {
+    print("List size: " + _trip.events.length.toString());
+    bool res = _trip.events.contains(e);
+    print("Is selected? " + (res ? "Yes":"No"));
+    return res;
+  }
+
   City get originCity {
     return _originCity;
   }

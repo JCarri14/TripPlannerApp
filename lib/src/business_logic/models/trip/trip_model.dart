@@ -21,6 +21,10 @@ class Trip {
     events.add(event);
   }
 
+  void removeEvent(String id) {
+    events.removeWhere((e) => e.id == id);
+  }
+
   factory Trip.fromJson(Map<String, dynamic> json){
     Trip trip =  Trip();
     trip.originAirport = Airport.fromJson(json['originAirport']);
