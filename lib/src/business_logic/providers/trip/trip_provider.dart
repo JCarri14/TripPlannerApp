@@ -3,20 +3,31 @@ import 'package:flutter/widgets.dart';
 import '../../models.dart';
 
 class TripCreationProvider with ChangeNotifier {
-  Trip _trip;
-  City _originCity;
-  City _destinationCity;
   DateTime _destinationDay = DateTime.now();
   DateTime _returnDay = DateTime.now();
+  City _originCity;
+  City _destinationCity;
+  Airport _originAirport;
+  Airport _destinationAirport;
+  Flight _departureFlight;
+  Flight _returnFlight;
+  Hotel _hotel;
+  List<Event> _events;
+
   int _budget;
   String _stringBudget;
   String _cityId;
   int _totalDays;
 
   TripCreationProvider():
-    _trip = new Trip(),
     _originCity = new City(),
     _destinationCity = new City(),
+    _originAirport = Airport(), 
+    _destinationAirport = Airport(), 
+    _departureFlight =  Flight(),
+    _returnFlight = Flight(),
+    _hotel = Hotel(),
+    _events = [],
     _cityId = "",
     _totalDays = 0,
     _stringBudget = "",
@@ -54,41 +65,38 @@ class TripCreationProvider with ChangeNotifier {
   }
 
   void saveOriginAirport(Airport originAirport) {
-    _trip.originAirport = originAirport;
+    _originAirport = originAirport;
     notifyListeners();
   }
 
   void saveDestinationAirport(Airport destinationAirport) {
-    _trip.destinationAirport = destinationAirport;
+    _destinationAirport = destinationAirport;
     notifyListeners();
   }    
 
   void saveDepartureFlight(Flight df) {
-    _trip.departureFlight = df;
+    _departureFlight = df;
     notifyListeners();
   }
 
   void saveReturnFlight(Flight rf) {
-    _trip.returnFlight = rf;
+    _returnFlight = rf;
     notifyListeners();
   }
 
   void addTripEvent(Event event) {
-    _trip.addEvent(event);
-    print("Trip added");
+    if (_events == null) _events = [];
+    _events.add(event);
     notifyListeners();
   }
 
   void removeTripEvent(String id) {
-    _trip.removeEvent(id);
+    _events.removeWhere((e) => e.id == id);
     notifyListeners();
   }
 
   bool isEventSelected(Event e) {
-    print("List size: " + _trip.events.length.toString());
-    bool res = _trip.events.contains(e);
-    print("Is selected? " + (res ? "Yes":"No"));
-    return res;
+    return _events.contains(e);
   }
 
   City get originCity {
@@ -112,19 +120,19 @@ class TripCreationProvider with ChangeNotifier {
   }
 
   Airport get originAirport {
-    return _trip.originAirport;
+    return _originAirport;
   }
 
   Airport get destinationAirport {
-    return _trip.destinationAirport;
+    return _destinationAirport;
   }
 
   Flight get departureFlight {
-    return _trip.departureFlight;
+    return _departureFlight;
   }
 
   Flight get returnFlight {
-    return _trip.returnFlight;
+    return _returnFlight;
   }
 
   String get stringBudget {
@@ -133,6 +141,40 @@ class TripCreationProvider with ChangeNotifier {
 
   int get budget {
     return _budget;
+  }
+
+  List<Event> get events {
+    return _events;
+  }
+
+  Trip generateTrip() {
+    Trip trip = new Trip();
+    trip.destinationDay = _destinationDay;
+    trip.returnDay = _returnDay;
+    trip.originCity = _originCity;
+    trip.destinationCity = _destinationCity;
+    trip.originAirport = _originAirport;
+    trip.destinationAirport = _destinationAirport;
+    trip.departureFlight = _departureFlight;
+    trip.returnFlight = _returnFlight;
+    trip.hotel = _hotel;
+    trip.events = _events;
+    return trip;
+  }
+
+  void emptyFields() {
+    _originCity = new City();
+    _destinationCity = new City();
+    _originAirport = Airport();
+    _destinationAirport = Airport(); 
+    _departureFlight =  Flight();
+    _returnFlight = Flight();
+    _hotel = Hotel();
+    _events = [];
+    _cityId = "";
+    _totalDays = 0;
+    _stringBudget = "";
+    _budget = 0;
   }
 
 }

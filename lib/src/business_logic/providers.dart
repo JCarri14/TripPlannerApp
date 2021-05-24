@@ -1,3 +1,6 @@
+//APP
+export "./providers/app_provider.dart";
+
 //SESSION
 export "./providers/session_provider.dart";
 

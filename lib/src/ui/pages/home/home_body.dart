@@ -1,15 +1,29 @@
 import "package:flutter/material.dart";
+import 'package:provider/provider.dart';
 
-class HomeBody extends StatelessWidget {
+//PROVIDERS
+import "../../../business_logic/providers.dart";
+
+import "./trips_carousel.dart";
+//MODELS
+
+class HomeBody extends StatefulWidget {
+  @override
+  _HomeBodyState createState() => _HomeBodyState();
+}
+
+class _HomeBodyState extends State<HomeBody> {
+
   @override
   Widget build(BuildContext context) {
+    
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16),
       child: Column(children: [
         Align(
           alignment: Alignment.centerLeft,
           child: Text(
-            'Popular Destinations', 
+            'Your Trips', 
             style: TextStyle(
               color: Theme.of(context).primaryColor,
               fontSize: 18, 
@@ -17,7 +31,7 @@ class HomeBody extends StatelessWidget {
           )
         ),
         SizedBox(height: 8),
-        Container(),
+        TripsCarousel(),
         SizedBox(height: 16),
         Align(
           alignment: Alignment.centerLeft,
