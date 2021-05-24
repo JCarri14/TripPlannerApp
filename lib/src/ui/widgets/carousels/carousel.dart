@@ -7,8 +7,14 @@ class CustomCarousel extends StatelessWidget {
   final List items;
   final Function onTapHandler;
   final Function onPageChanged;
+  final bool infiniteScroll;
   
-  CustomCarousel({this.items, this.onTapHandler, this.onPageChanged});
+  CustomCarousel({
+    this.items, 
+    this.onTapHandler, 
+    this.onPageChanged,
+    this.infiniteScroll = true
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +26,7 @@ class CustomCarousel extends StatelessWidget {
             autoPlay: false,
             viewportFraction: 0.6,
             aspectRatio: 2.75,
-            enableInfiniteScroll: true,
+            enableInfiniteScroll: this.infiniteScroll,
             enlargeCenterPage: true,
             onPageChanged: (index, reason) => this.onPageChanged(index),
             scrollDirection: Axis.horizontal,

@@ -12,6 +12,7 @@ import "../../../business_logic/providers.dart";
 
 //ROUTES
 import "../../../config/routes/routes.dart";
+import "../../pages.dart";
 
 //MODELS
 import "../../../business_logic/models.dart";
@@ -31,19 +32,13 @@ class _EventsDraggableState extends State<EventsDraggable> {
   int numItems;
 
   // INNER LOGIC
-  final List<String> categories = ['Restaurants', 'Shopping', 'Sights', 'Night life',];
-  String _valueChoose;
-  final Map<String, Function> catFunctions = new Map();
-  int currCat;
   bool didFetch;
 
   @override
   void initState() {
     super.initState();
-    currCat = 0;
     numItems = 5;
     didFetch = false;
-    _valueChoose = categories[0];
   }
 
   @override
@@ -120,7 +115,12 @@ class _EventsDraggableState extends State<EventsDraggable> {
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).pushNamed(
-                      tripRoute);
+                      tripRoute,
+                      arguments: TripPageArguments(
+                        trip: tripManager.generateTrip(),
+                        saveMode: true
+                      )
+                    );
                   },
                   child: Text('Continue'),
                   style: ElevatedButton.styleFrom(

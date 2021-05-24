@@ -121,7 +121,6 @@ void showEventDetailsBottomSheet(ctx, Event event) {
                     if (tripManager.isEventSelected(event)) {
                       tripManager.removeTripEvent(event.id);
                     } else {
-                      print("Adding trip");
                       tripManager.addTripEvent(event);
                     }
                   },
