@@ -4,11 +4,10 @@ import 'package:provider/provider.dart';
 //PROVIDERS
 import "../../../business_logic/providers.dart";
 
-//MODELS
-import "../../../business_logic/models.dart";
-
 //ROUTES
 import "../../../config/routes/routes.dart";
+
+import "../../pages.dart";
 
 //WIDGETS
 import "./category_selector.dart";
@@ -78,7 +77,12 @@ class _ListViewPageState extends State<ListViewPage> {
                   ),
                   onPressed: () {
                     Navigator.of(context).pushNamed(
-                      tripRoute);
+                      tripRoute,
+                      arguments: TripPageArguments(
+                        trip: tripManager.generateTrip(),
+                        saveMode: true
+                      )
+                    );
                   },
                 )
               ),                

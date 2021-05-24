@@ -1,6 +1,10 @@
 import '../../models.dart';
 
 class Trip {
+  DateTime destinationDay;
+  DateTime returnDay;
+  City originCity;
+  City destinationCity;
   Airport originAirport;
   Airport destinationAirport;
   Flight departureFlight;
@@ -9,6 +13,10 @@ class Trip {
   List<Event> events;
 
   Trip(): 
+  destinationDay = DateTime.now(),
+  returnDay = DateTime.now(),
+  originCity = City(),
+  destinationCity = City(),
   originAirport = Airport(), 
   destinationAirport = Airport(), 
   departureFlight =  Flight(),
@@ -48,6 +56,10 @@ class Trip {
     eventsJson += "],";
 
     return "{"
+      '"destinationDay": ' + this.destinationDay.toString() + ","
+      '"returnDay": ' + this.returnDay.toString() + ","
+      '"originCity": ' + this.originCity.toJson() + ","
+      '"destinationCity": ' + this.destinationCity.toJson() + ","
       '"originAirport": ' + this.originAirport.toJson() + ","
       '"destinationAirport": ' + this.destinationAirport.toJson() + ","
       '"departureFlight": ' + this.departureFlight.toJson() + ","

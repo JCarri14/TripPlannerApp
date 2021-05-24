@@ -32,6 +32,17 @@ class City {
       longitude: json['longitude']
     );
   }
+
+   String toJson(){
+    return "{"
+        '"apiId": ' + this.apiId + ","
+        '"name": ' + this.name + ","
+        '"region": ' + this.region + ","
+        '"country": ' + this.country + ","
+        '"latitude": ' + this.latitude.toString() + ","
+        '"longitude": ' + this.longitude.toString() + ","
+        "}";
+  }
 }
 
 class CityThumbnail {

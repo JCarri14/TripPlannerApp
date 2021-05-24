@@ -23,6 +23,7 @@ class FlightSearchPage extends StatefulWidget {
 
 class _FlightSearchPageState extends State<FlightSearchPage> {
   final FlightProvider _flightProvider = new FlightProvider();
+  TripCreationProvider tripManager;
 
   @override
   void dispose() {
@@ -30,8 +31,9 @@ class _FlightSearchPageState extends State<FlightSearchPage> {
     super.dispose();
   }
 
-  void _onFlightReady(BuildContext context, bool isOrigin) {
+  void _onFlightReady(BuildContext context, Flight flight, bool isOrigin) {
     if (isOrigin) {
+      tripManager.saveDepartureFlight(flight);
       Navigator.of(context).pushNamed(
       flightSearchRoute, 
       arguments: FlightArguments(
@@ -39,6 +41,7 @@ class _FlightSearchPageState extends State<FlightSearchPage> {
             isOrigin: false,
           ));
     } else {
+      tripManager.saveReturnFlight(flight);
       Navigator.of(context).pushNamed(
       eventSelectionRoute, arguments: false);
     }
@@ -47,7 +50,7 @@ class _FlightSearchPageState extends State<FlightSearchPage> {
   @override
   Widget build(BuildContext context) {
     final FlightArguments args = (ModalRoute.of(context).settings.arguments as FlightArguments);
-    final TripCreationProvider tripManager = Provider.of<TripCreationProvider>(context);
+    tripManager = Provider.of<TripCreationProvider>(context);
 
     String orgId;
     String dstId;
@@ -104,7 +107,7 @@ class _FlightSearchPageState extends State<FlightSearchPage> {
                               originAirport: args.isOrigin ? tripManager.originAirport : tripManager.destinationAirport,
                               flightDate: flightDate,
                               onTapHandler: () { 
-                                _onFlightReady(context, args.isOrigin);
+                                _onFlightReady(context, flights[i], args.isOrigin);
                               },
                             );
                           },
