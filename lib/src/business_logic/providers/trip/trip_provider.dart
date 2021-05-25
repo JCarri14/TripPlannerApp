@@ -13,11 +13,11 @@ class TripCreationProvider with ChangeNotifier {
   Flight _returnFlight;
   Hotel _hotel;
   List<Event> _events;
+  int _numAdults;
+  int _numTeens;
 
   int _budget;
-  String _stringBudget;
   String _cityId;
-  int _totalDays;
 
   TripCreationProvider():
     _originCity = new City(),
@@ -29,8 +29,9 @@ class TripCreationProvider with ChangeNotifier {
     _hotel = Hotel(),
     _events = [],
     _cityId = "",
-    _totalDays = 0,
-    _stringBudget = "",
+    _numAdults = 0,
+    _numTeens = 0,
+
     _budget = 0;
 
 
@@ -55,13 +56,22 @@ class TripCreationProvider with ChangeNotifier {
 
   void saveReturnDay(DateTime returnDay) {
     this._returnDay = returnDay;
-    this._totalDays = this._destinationDay.difference(returnDay).inDays;
+    //this._totalDays = this._destinationDay.difference(returnDay).inDays;
     notifyListeners();
   }
 
   void saveBudget(int budget) {
     this._budget = budget;
+    //notifyListeners();
+  }
+
+  void saveNumAdults(int numAdults) {
+    this._numAdults = numAdults;
     notifyListeners();
+  }
+
+  void saveNumTeens(int numTeens) {
+    this._numTeens = numTeens;
   }
 
   void saveOriginAirport(Airport originAirport) {
@@ -135,12 +145,16 @@ class TripCreationProvider with ChangeNotifier {
     return _returnFlight;
   }
 
-  String get stringBudget {
-    return _stringBudget;
-  }
-
   int get budget {
     return _budget;
+  }
+
+  int get numAdults {
+    return _numAdults;
+  }
+
+  int get numTeens {
+    return _numTeens;
   }
 
   List<Event> get events {
@@ -159,6 +173,8 @@ class TripCreationProvider with ChangeNotifier {
     trip.returnFlight = _returnFlight;
     trip.hotel = _hotel;
     trip.events = _events;
+    trip.numAdults = _numAdults;
+    trip.numTeens = _numTeens;
     return trip;
   }
 
@@ -172,9 +188,9 @@ class TripCreationProvider with ChangeNotifier {
     _hotel = Hotel();
     _events = [];
     _cityId = "";
-    _totalDays = 0;
-    _stringBudget = "";
     _budget = 0;
+    _numAdults = 0;
+    _numTeens = 0;
   }
 
 }
