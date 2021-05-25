@@ -1,12 +1,14 @@
 import "package:flutter/material.dart";
+import 'package:flutter/services.dart';
 import "../../../utils/form_validators.dart";
 
 class CustomFormField extends StatefulWidget {
   final String title;
   final String hintText;
+  final String initialValue;
   final IconData prefixIcon;
-  final String inputValue;
   final TextInputType inputType;
+  final bool numericType;
   final bool obscureText;
   final Function(String) validator;
   final Function onChanged;
@@ -15,9 +17,10 @@ class CustomFormField extends StatefulWidget {
   CustomFormField({
     this.title = "Input", 
     this.hintText = "Enter value", 
+    this.initialValue = "",
     this.prefixIcon,
-    this.inputValue = "",
     this.inputType = TextInputType.name,
+    this.numericType = false,
     this.obscureText = false,
     this.validator = baseValidator,
     this.onChanged,
@@ -30,17 +33,27 @@ class CustomFormField extends StatefulWidget {
 
 class CustomFormFieldState extends State<CustomFormField> {
 
-  final inputController = TextEditingController();
+  final TextEditingController inputController = TextEditingController();
+
+  void _handleInputCallback() {
+    widget.onChanged(inputController.text);
+  }
 
   @override
   void initState() {
     super.initState();
-    inputController.addListener(() => setState(() {}));
+    inputController.addListener(_handleInputCallback);
+  }
+
+  @override
+  void dispose() {
+    inputController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    
+
     return widget.onTapHandler != null ? 
     InkWell(
       onTap: widget.onTapHandler,
@@ -61,18 +74,12 @@ class CustomFormFieldState extends State<CustomFormField> {
             Container(
               height: 45,
               child: TextFormField(
-                controller: inputController..text = widget.inputValue,
+                controller: inputController..text = widget.initialValue,
                 validator: (value) { return widget.validator(value);},
                 obscureText: widget.obscureText,
                 decoration: InputDecoration(
                   hintText: widget.hintText,
                   prefixIcon: widget.prefixIcon != null ? Icon(widget.prefixIcon): null,
-                  suffixIcon: inputController.text.isEmpty ? 
-                    Container(width: 0)
-                    : IconButton(
-                      icon: Icon(Icons.close, color: Colors.blue,),
-                      onPressed: () => inputController.clear(),
-                    ),
                   border: OutlineInputBorder(),
                   ),
                 keyboardType: widget.inputType,
@@ -102,13 +109,6 @@ class CustomFormFieldState extends State<CustomFormField> {
               child: TextFormField(
                 controller: inputController..text,
                 validator: (value) { return widget.validator(value);},
-                onChanged: (value) {
-                  widget.onChanged(value);
-                  setState(() {
-                    print(value);
-                    inputController..text = value;
-                  });
-                },
                 obscureText: widget.obscureText,
                 decoration: InputDecoration(
                   hintText: widget.hintText,
@@ -122,6 +122,7 @@ class CustomFormFieldState extends State<CustomFormField> {
                   border: OutlineInputBorder(),
                   ),
                 keyboardType: widget.inputType,
+                inputFormatters: widget.numericType ?[FilteringTextInputFormatter.digitsOnly]:[],
               ),
             )
           ],
