@@ -99,7 +99,7 @@ class _TripForPageState extends State<TripFormPage> {
                             child: CustomFormField(
                               title: 'From', 
                               hintText: 'Enter origin...',
-                              inputValue: tripData.originCity.toString(), 
+                              initialValue: tripData.originCity.toString(), 
                               onTapHandler: () {
                                 Navigator.of(context).pushNamed(locationSearchRoute, arguments: true);
                               }
@@ -109,7 +109,7 @@ class _TripForPageState extends State<TripFormPage> {
                             margin: EdgeInsets.symmetric(vertical: 4),
                             child: CustomFormField(
                               title: 'To', 
-                              inputValue: tripData.destinationCity.toString(), 
+                              initialValue: tripData.destinationCity.toString(), 
                               hintText: 'Enter destination...', 
                               onTapHandler: () {
                                 Navigator.of(context).pushNamed(locationSearchRoute, arguments: false);
@@ -209,12 +209,35 @@ class _TripForPageState extends State<TripFormPage> {
                               thickness: 2,
                             ),
                           ),
-                          CustomFormField(
-                            title: 'How much would you like to spend?',
-                            //inputValue: tripData.budget.toString(),
-                            onChanged: (value) => tripData.saveBudget(int.parse(value)),
-                            inputType: TextInputType.number,
+                          Container(
+                            width: double.infinity,
+                            height: 100,
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: CustomFormField(
+                                    title: 'Adults',
+                                    onChanged: (value) => tripData.saveNumAdults(int.parse(value)),
+                                    inputType: TextInputType.number,
+                                    numericType: true,
+                                  ),
+                                ),
+                                SizedBox(width: 16),
+                                Expanded(
+                                  child: CustomFormField(
+                                    title: 'Teens',
+                                    onChanged: (value)  {
+                                      print("Inside Teens value");
+                                      tripData.saveNumTeens(int.parse(value));
+                                    },
+                                    inputType: TextInputType.number,
+                                    numericType: true,
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
+                          
                         ],
                       ),
                     ),
