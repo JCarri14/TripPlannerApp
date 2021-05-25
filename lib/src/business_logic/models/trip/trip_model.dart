@@ -11,6 +11,8 @@ class Trip {
   Flight returnFlight;
   Hotel hotel;
   List<Event> events;
+  int numAdults;
+  int numTeens;
 
   Trip(): 
   destinationDay = DateTime.now(),
@@ -22,7 +24,9 @@ class Trip {
   departureFlight =  Flight(),
   returnFlight = Flight(),
   hotel = Hotel(),
-  events = [];
+  events = [],
+  numAdults = 0,
+  numTeens = 0;
 
   void addEvent(Event event) {
     if (events == null) events = [];
@@ -65,6 +69,8 @@ class Trip {
       '"departureFlight": ' + this.departureFlight.toJson() + ","
       '"returnFlight": ' + this.returnFlight.toJson() + ","
       '"hotel": ' + this.hotel.toJson() + ","
+      '"numAdults": ' + this.numAdults.toString() + ","
+      '"numTeens": ' + this.numTeens.toString() + ","
       '"events": ' + eventsJson + ","
       "}";
   }
