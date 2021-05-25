@@ -36,7 +36,6 @@ class _TripPageState extends State<TripPage> {
     appProvider = Provider.of<AppProvider>(context);
 
     final args = ModalRoute.of(context).settings.arguments as TripPageArguments;
-    print(args.trip.toJson());
 
     return Scaffold(
       key: scaffoldState,
@@ -84,7 +83,7 @@ class _TripPageState extends State<TripPage> {
                 ],
               ),
             ),
-            SizedBox(height: 16,),
+            SizedBox(height: 8,),
             Card(
               child: Column(
                 children: [
@@ -122,7 +121,43 @@ class _TripPageState extends State<TripPage> {
                 ],
               ),
             ),
-            SizedBox(height: 16,),
+            SizedBox(height: 8,),
+            Card(
+              child: Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                    width: double.infinity,
+                    child: Text(
+                      "Quantity", 
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold
+                      )
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ListTile(
+                          title: Text("Adults"),
+                          subtitle: Text(args.trip.numAdults.toString()),
+                        ),
+                      ),
+                      Expanded(
+                        child: ListTile(
+                          title: Text("Teens"),
+                          subtitle: Text(args.trip.numTeens.toString()),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              )
+            ),
+            SizedBox(height: 8,),
             Container(
               padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
               width: double.infinity,
