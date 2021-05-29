@@ -75,7 +75,6 @@ class EventProvider with ChangeNotifier {
   }
 
   void fetchEvents({ContentType eventType, String latitude, String day, String longitude}) {
-    print("General fetch");
     switch (eventType) {
       case ContentType.SIGHT:
         fetchFreeSightEvents(latitude, longitude, 5);

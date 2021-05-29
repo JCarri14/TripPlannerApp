@@ -94,6 +94,11 @@ class TripCreationProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void saveHotel(Hotel hotel) {
+    _hotel = hotel;
+    notifyListeners();
+  }
+
   void addTripEvent(Event event) {
     if (_events == null) _events = [];
     _events.add(event);
@@ -143,6 +148,10 @@ class TripCreationProvider with ChangeNotifier {
 
   Flight get returnFlight {
     return _returnFlight;
+  }
+
+  Hotel get hotel {
+    return _hotel;
   }
 
   int get budget {
