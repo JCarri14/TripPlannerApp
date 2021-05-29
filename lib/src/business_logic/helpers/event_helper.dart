@@ -42,13 +42,14 @@ Event parseEvent(Map<String, dynamic> json) {
 }
 
 Event parsePaidEvent(Map<String, dynamic> json) {
+  int rank = json['rank'];
   return Event(
     id: json['id'] + json['title'],
     name: json['title'],
-    ranking: json['rank'] * 5 / 100,
+    ranking: double.parse(rank.toString()),
     category: "${json['category'][0].toUpperCase()}${json['category'].substring(1)}",
-    latitude: double.parse(json['location'][0]),
-    longitude: double.parse(json['location'][1]),
+    latitude: (json['location'][0]),
+    longitude: (json['location'][1]),
     description: json['description'],
     venue: json['entities'].length > 0 ? json['entities'][0]['name']:"",
     startDatetime: json['start'],

@@ -62,7 +62,7 @@ class _EventsDraggableState extends State<EventsDraggable> {
         ),
       );
     }
-    if (eventProvider.isLoaded) {
+    if (eventProvider.isLoaded && events.length > 0) {
       eventsContent = CustomCarousel(
         items: events.map((e) {
           return CarouselItem(title: e.name, subtitle: e.category, isSelected: tripManager.isEventSelected(e));
