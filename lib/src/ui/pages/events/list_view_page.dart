@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import 'package:provider/provider.dart';
+import 'package:lottie/lottie.dart';
 
 //PROVIDERS
 import "../../../business_logic/providers.dart";
@@ -58,8 +59,14 @@ class _ListViewPageState extends State<ListViewPage> {
               Expanded(
                 child: Container(
                   margin: EdgeInsets.symmetric(horizontal: 8),
-                  child: ListView(
+                  child: eventProvider.isLoaded ? 
+                    ListView(
                       children: listEvents,
+                    ):
+                    Container(
+                      child: Center(
+                        child: Lottie.asset("assets/circle-loader.json"),
+                      )
                     ),
                 ),
               ),
