@@ -100,35 +100,35 @@ class _EventsDraggableState extends State<EventsDraggable> {
                 SizedBox(height: 16),
                 Text('Events', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold)),
                 //Text('Activities (day'+ tripManager.currDay.toString() +')', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),   
-              EventCategorySelector(
-                key: Key("EventCategorySelectorMap")
-              ),
-              SizedBox(height: 8),
-              Container(
-                child: eventsContent
-              ),
-              SizedBox(height: 8,),
-              Container(
-                height: 45,
-                width: double.infinity,
-                margin: EdgeInsets.all(8),
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(
-                      tripRoute,
-                      arguments: TripPageArguments(
-                        trip: tripManager.generateTrip(),
-                        saveMode: true
-                      )
-                    );
-                  },
-                  child: Text('Continue'),
-                  style: ElevatedButton.styleFrom(
-                    primary: Theme.of(context).primaryColor
-                  )
+                EventCategorySelector(
+                  key: Key("EventCategorySelectorMap")
                 ),
-              ),
-            ]),
+                SizedBox(height: 8),
+                Container(
+                  child: eventsContent
+                ),
+                SizedBox(height: 8,),
+                Container(
+                  height: 45,
+                  width: double.infinity,
+                  margin: EdgeInsets.all(8),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(
+                        tripRoute,
+                        arguments: TripPageArguments(
+                          trip: tripManager.generateTrip(),
+                          saveMode: true
+                        )
+                      );
+                    },
+                    child: Text('Continue'),
+                    style: ElevatedButton.styleFrom(
+                      primary: Theme.of(context).primaryColor
+                    )
+                  ),
+                ),
+              ]),
           )                
         );
       }

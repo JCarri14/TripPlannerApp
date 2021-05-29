@@ -12,12 +12,8 @@ import "../../../business_logic/providers.dart";
 //MODELS
 import "../../../business_logic/models.dart";
 
-
-//OTHER
-import '../../../network/api/api_response.dart';
-
-// BOTTOM SHEET
-import '../bottom_sheets/hotel_bottom_sheet.dart';
+//ROUTES
+import "../../../config/routes/routes.dart";
 
 class HotelDraggable extends StatefulWidget {
 
@@ -30,13 +26,8 @@ class HotelDraggable extends StatefulWidget {
 }
 
 class _HotelDraggableState extends State<HotelDraggable> {
-  LoadFetchTimer loadFetchTimer;
-  // NETWORKING & STATE
   TripCreationProvider tripManager;
   HotelProvider hotelProvider;
-
-  // INNER LOGIC
-  double _sliderValue;
 
   Function onChangeLocation;
   bool didFetch;
@@ -44,24 +35,51 @@ class _HotelDraggableState extends State<HotelDraggable> {
   @override
   void initState() {
     super.initState();
-    _sliderValue = 80;
     onChangeLocation = widget.onChangeLocation;
-    hotelProvider = new HotelProvider();
     didFetch = false;
   }
 
   @override
   Widget build(BuildContext context) {
-
     tripManager = Provider.of<TripCreationProvider>(context);
+    hotelProvider = Provider.of<HotelProvider>(context);
 
     String posId = tripManager.positionId;
     String chckIn = tripManager.destinationDate;
     String chckOut = tripManager.returnDate;
 
-    if (didFetch == null || !didFetch)
-      hotelProvider.fetchHotels(context, posId, chckIn, chckOut, _sliderValue.toString());
-      didFetch = true;
+    if (!hotelProvider.isLoaded && !hotelProvider.isLoading) {
+      hotelProvider.fetchHotels(context, posId, chckIn, chckOut, '500');
+    }
+
+    List<Hotel> hotels = hotelProvider.hotels;
+    Widget hotelsContent;
+
+    if (hotelProvider.isLoading) {
+      hotelsContent = Container(
+        child: Center(
+          child: Text('Loading'),
+        ),
+      );
+    }
+    if (hotelProvider.isLoaded) {
+      hotelsContent = CustomCarousel(
+        items: hotels.map((h) {
+          return CarouselItem(
+            title: h.name, 
+            subtitle: h.address, 
+            isSelected: hotelProvider.selectedHotel.name == h.name);
+        }).toList(),
+        onTapHandler: (idx) { hotelProvider.saveSelectedHotel(hotels[idx]);},
+        onPageChanged: (idx) {},
+      );
+    }
+
+    if (hotelProvider.isError) {
+      hotelsContent = Container(
+        child: Center(child: Text("No items found\nfor this category"),)
+      );
+    }
 
     return DraggableScrollableSheet(
       expand: true,
@@ -84,70 +102,30 @@ class _HotelDraggableState extends State<HotelDraggable> {
               children: [
                 SizedBox(height: 16),
                 Text('Hotels', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              ListTile(
-                title: Text('Total Budget left:'),
-                trailing: Text('400'),
-              ),
-              ExpansionTile(
-                title: Text('Filter Cost'),
-                trailing: Icon(Icons.keyboard_arrow_down),
-                children: [
-                  Slider(
-                    value: _sliderValue,
-                    min: 0,
-                    max: 300,
-                    divisions: 5,
-                    label: _sliderValue.round().toString(),
-                    onChanged: (value) {
-                      setState(() {
-                        _sliderValue = value;
-                      });
-                      loadFetchTimer.loadTimer(() => hotelProvider.fetchHotels(context, posId, chckIn, chckOut, _sliderValue.toString()));
-                    },
-                  )
-                ],
-              ),
-              SizedBox(height: 16),
-              StreamBuilder(
-                stream: hotelProvider.hotelListStream,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    final List<Hotel> hotels = snapshot.data.data ?? [];
-
-                    switch(snapshot.data.status) {
-                      case Status.LOADING:
-                        return Container(
-                          child: Center(
-                            child: Text('Loading'),
-                          ),
-                        );
-                      case Status.COMPLETED:
-                        return CustomCarousel(
-                          items: hotels.map((h) {
-                            return CarouselItem(title: h.name, subtitle: h.address);
-                          }).toList(),
-                          onTapHandler: (idx) { showHotelBottomSheet(context, hotels[idx]);},
-                          onPageChanged: (idx) { onChangeLocation(hotels[idx]);},
-                        );
-                    }
-                  }
-                  return Container();
-                },
-              ),
-              SizedBox(height: 8,),
-              Container(
-                height: 45,
-                width: double.infinity,
-                margin: EdgeInsets.all(8),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Theme.of(context).primaryColor
-                  ),
-                  onPressed: () {},
-                  child: Text('Continue')
+                SizedBox(height: 16),
+                Container(
+                  child: hotelsContent
                 ),
-              ),
-            ]),
+                SizedBox(height: 8,),
+                Container(
+                  height: 45,
+                  width: double.infinity,
+                  margin: EdgeInsets.all(8),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Theme.of(context).primaryColor
+                    ),
+                    onPressed: () {
+                      tripManager.saveHotel(
+                        hotelProvider.selectedHotel
+                      );
+                      Navigator.of(context).pushNamed(
+                        eventSelectionRoute, arguments: false);
+                    },
+                    child: Text('Continue')
+                  ),
+                ),
+              ]),
           )
         );
       }
