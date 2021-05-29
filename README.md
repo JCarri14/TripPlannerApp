@@ -1,16 +1,55 @@
-# trip_planner_app
+# TRIP PLANNER APP
 
-A new Flutter project.
+A simple Flutter app to start planning your trips.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+### 💻 Requirements
 
-A few resources to get you started if this is your first Flutter project:
+- Any Operating System (ie. MacOS X, Linux, Windows)
+- Any IDE with Flutter SDK installed (ie. IntelliJ, Android Studio, VSCode etc)
+- A little knowledge of Dart and Flutter
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+### 🔌 Install Dependencies
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Run `flutter pub get i` or `dart pub get` in the terminal to install the dependencies.
+
+### 🔧 Environment Variables
+
+Create an `.env` file in the root of the project with the following entries:
+
+- `API_KEY`: RapidAPI Key 
+- `API_HOST_FLIGHT`: URL of Fligh Scanner API
+- `API_HOST_GEO`: URL of GeoDB API
+- `API_HOST_HOTELS`: URL of Hotels API
+
+- `API_ACCESS_TOKEN_FREE_EVENTS`: Access token from Amadeus API
+- `API_KEY_FREE_EVENTS`: API Key from Amadeus API
+- `API_KEY_SECRET_FREE_EVENTS`: API Key Secret from Amadeus API
+
+- `API_ACCESS_TOKEN_TICKETED_EVENTS`: API Access Token from PredictHQ API
+
+- `API_TOKEN_MAPBOX`: API Token from Mapbox
+- `API_URL_TEMPL_MAPBOX`: API Url from Mapbox
+
+```env
+// .env
+API_KEY=''
+API_HOST_FLIGHT='skyscanner-skyscanner-flight-search-v1.p.rapidapi.com'
+API_HOST_GEO='wft-geo-db.p.rapidapi.com'
+API_HOST_HOTELS='hotels4.p.rapidapi.com'
+
+API_ACCESS_TOKEN_FREE_EVENTS=''
+API_KEY_FREE_EVENTS=''
+API_KEY_SECRET_FREE_EVENTS=''
+
+API_ACCESS_TOKEN_TICKETED_EVENTS=''
+
+API_TOKEN_MAPBOX=''
+API_URL_TEMPL_MAPBOX=''
+```
+
+## Authors
+
+- [Joan Carrión](https://github.com/JCarri14)
+- [Daniel Casado](https://github.com/danielcasadofauli)
