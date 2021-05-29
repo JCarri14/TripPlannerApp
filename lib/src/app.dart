@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
         Provider(create: (_) => SessionProvider()),
         ChangeNotifierProvider(create: (_) => AppProvider()),
         ChangeNotifierProvider(create: (_) => EventProvider()),
+        ChangeNotifierProvider(create: (_) => HotelProvider()),
         ChangeNotifierProvider(create: (ctx) => TripCreationProvider()),
       ],
       child: MaterialApp(

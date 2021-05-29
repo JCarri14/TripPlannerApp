@@ -32,18 +32,6 @@ class _HomeBodyState extends State<HomeBody> {
         ),
         SizedBox(height: 8),
         TripsCarousel(),
-        SizedBox(height: 16),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            'Visited', 
-            style: TextStyle(
-              color: Theme.of(context).primaryColor,
-              fontSize: 18, 
-              fontWeight: FontWeight.bold)
-          )
-        ),
-
       ])
     )
   ;

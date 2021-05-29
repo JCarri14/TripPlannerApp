@@ -43,7 +43,7 @@ class _FlightSearchPageState extends State<FlightSearchPage> {
     } else {
       tripManager.saveReturnFlight(flight);
       Navigator.of(context).pushNamed(
-      eventSelectionRoute, arguments: false);
+        hotelSearchRoute);
     }
   }
 

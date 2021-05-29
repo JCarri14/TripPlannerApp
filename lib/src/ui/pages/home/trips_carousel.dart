@@ -65,7 +65,7 @@ class _TripsCarouselState extends State<TripsCarousel> {
       );
     } else {
       eventsContent = Container(
-        child: Center(child: Text("No events selected"),)
+        child: Center(child: Text("No events created"),)
       );
     }
 
