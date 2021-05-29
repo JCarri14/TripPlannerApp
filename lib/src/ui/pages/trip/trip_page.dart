@@ -158,6 +158,62 @@ class _TripPageState extends State<TripPage> {
               )
             ),
             SizedBox(height: 8,),
+            Card(
+              child: Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                    width: double.infinity,
+                    child: Text(
+                      "Hotel", 
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold
+                      )
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ListTile(
+                          title: Text("Name"),
+                          subtitle: Text(args.trip.hotel.name),
+                        ),
+                      ),
+                      Expanded(
+                        child: ListTile(
+                          title: Text("Address"),
+                          subtitle: Text(args.trip.hotel.address),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ListTile(
+                          title: Text("Price/Night"),
+                          subtitle: Text(
+                            args.trip.hotel.pricePerNight.toString() + "€",
+                          )
+                        ),
+                      ),
+                      Expanded(
+                        child: ListTile(
+                          title: Text("Rating"),
+                          subtitle: Text(
+                            args.trip.hotel.starRating.toString(),
+                          )
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              )
+            ),
+            SizedBox(height: 8,),
             Container(
               padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
               width: double.infinity,
